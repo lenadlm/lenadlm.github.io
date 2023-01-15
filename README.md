@@ -3,4 +3,4 @@
 https://pages.github.com/
 
 
-	/website?down_color=lightgrey&down_message=offline&up_color=blue&up_message=online&url=https://lenadlm.github.io
+	<a href='/website?down_color=lightgrey&down_message=offline&up_color=blue&up_message=online&url=https://lenadlm.github.io'>
