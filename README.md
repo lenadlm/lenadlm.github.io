@@ -3,4 +3,5 @@
 https://pages.github.com/
 
 
-	<a href='/website?down_color=lightgrey&down_message=offline&up_color=blue&up_message=online&url=https://lenadlm.github.io'>
+	<img src='/website?down_color=lightgrey&down_message=offline&up_color=blue&up_message=online&url=https://lenadlm.github.io'
+		alt='Website Status'>
