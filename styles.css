@@ -1,0 +1,22 @@
+body {
+	background-image: url("images/bg2.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.bg-opacity {
+	background-color: rgba(255, 255, 255, 0.75);
+}
+.custom-col-h	{
+	height: 400px;
+}
+.font-mnt {
+	font-family: "Montserrat" sans-serif;
+	font-size: 20px;
+}
+p.font-rlw	{
+	font-family: "Raleway" sans-serif;
+	font-size: 30px;
+}
+.
