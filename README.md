@@ -3,4 +3,4 @@
 https://pages.github.com/
 
 <br><br>
-<img src='https://lenadlm.github.io/index.html/website?down_color=lightgrey&down_message=offline&up_color=blue&up_message=online&url=https%3A%2F%2Fshields.io'>
+[![HitCount](https://hits.dwyl.com/lenadlm/lenadlm.github.io.svg)](https://hits.dwyl.com/lenadlm/lenadlm.github.io)'>
