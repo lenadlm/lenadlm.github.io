@@ -3,4 +3,4 @@
 https://pages.github.com/
 
 <br><br>
-[![HitCount](https://hits.dwyl.com/lenadlm/lenadlm.github.io.svg)](https://hits.dwyl.com/lenadlm/lenadlm.github.io)'>
+[![HitCount](https://hits.dwyl.com/lenadlm/lenadlm.github.io.svg)](https://hits.dwyl.com/lenadlm/lenadlm.github.io)
