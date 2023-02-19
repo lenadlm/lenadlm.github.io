@@ -7,7 +7,7 @@ function updateTime() {
     second: 'numeric',
     weekday: 'short',
     day: 'numeric',
-    month: 'short'
+    month: 'long'
   };
   const timeString = date.toLocaleString('en-US', options);
   const navbarElement = document.getElementById('navbar-time');
