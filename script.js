@@ -1,10 +1,17 @@
-      function updateTime() {
-        var now = new Date();
-        var options = { timeZone: 'Africa/Nairobi' };
-        var eatTime = now.toLocaleTimeString('en-US', options);
-        var date = now.toDateString();
-        var timeString = date + ' ' + eatTime;
-        document.getElementById('current-time').textContent = timeString;
-      }
-      
-      setInterval(updateTime, 1000);
+function updateTime() {
+  const date = new Date();
+  const options = {
+    timeZone: 'Africa/Nairobi',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short'
+  };
+  const timeString = date.toLocaleString('en-US', options);
+  const navbarElement = document.getElementById('navbar-time');
+  navbarElement.innerHTML = timeString;
+}
+
+setInterval(updateTime, 1000);
