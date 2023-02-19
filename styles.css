@@ -18,6 +18,7 @@ p.font-rlw	{
 	font-family: "Raleway" sans-serif;
 	font-size: 30px;
 }
-#navbar-time {
+.time 
+.time-long {
 	font-family: 'Inconsolata', monospace;
 }
