@@ -32,3 +32,22 @@ p.font-rlw {
 .time, .time-long {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
+/* Navbar Button Animation */
+.navbar a.btn {
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.navbar a.btn:hover {
+    transform: scale(1.1);
+    background-color: #28a745; /* Adjust color as needed */
+}
+
+/* Footer Badge Animation */
+footer a img {
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+footer a img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
