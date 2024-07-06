@@ -46,3 +46,24 @@ setInterval(updateTime, 5000); // Update every 5 seconds
 // Event listeners to show/hide detailed time format on hover
 timeElement.addEventListener('mouseenter', showLongTime);
 timeElement.addEventListener('mouseleave', hideLongTime);
+
+// Wiggle badges in the footer
+// Select all badge images in the footer
+const badgeImages = document.querySelectorAll('footer a img');
+
+// Function to add wiggle animation
+function addWiggleAnimation() {
+    this.classList.add('badge-wiggle');
+}
+
+// Function to remove wiggle animation
+function removeWiggleAnimation() {
+    this.classList.remove('badge-wiggle');
+}
+
+// Add event listeners to each badge image
+badgeImages.forEach(badge => {
+    badge.addEventListener('mouseenter', addWiggleAnimation);
+    badge.addEventListener('mouseleave', removeWiggleAnimation);
+});
+
