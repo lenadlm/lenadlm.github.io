@@ -58,8 +58,34 @@ footer a img:hover {
     25% { transform: rotate(6deg); }
     75% { transform: rotate(-6deg); }
     100% { transform: rotate(0); }
-}
 
+/* Apply Animation to badge-wiggle */
 .badge-wiggle {
     animation: wiggle 0.5s ease-in-out;
 }
+
+/* Drop and Bounce Animation */
+@keyframes dropAndBounce {
+    0% {
+        transform: translateY(-100px) scale(0.7);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(0) scale(1.1);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(-20px) scale(0.95);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Apply Animation to profile-image */
+
+#profile-image {
+    animation: dropAndBounce 1s ease-out;
+}
+
+
