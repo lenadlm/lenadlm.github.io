@@ -1,24 +1,34 @@
+/* Set body background with image and properties */
 body {
-	background-image: url("images/bg2.png");
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
+    background-image: url("images/bg2.png");
+    background-size: cover; /* Ensure background covers entire viewport */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-attachment: fixed; /* Fix background position while scrolling */
 }
+
+/* Background opacity overlay */
 .bg-opacity {
-	background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.75); /* 75% white opacity */
 }
-.custom-col-h	{
-	height: 400px;
+
+/* Custom height for columns */
+.custom-col-h {
+    height: 400px; /* Fixed height for columns */
 }
+
+/* Font style for Montserrat */
 .font-mnt {
-	font-family: "Montserrat" sans-serif;
-	font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
 }
-p.font-rlw	{
-	font-family: "Raleway" sans-serif;
-	font-size: 30px;
+
+/* Font style for Raleway paragraphs */
+p.font-rlw {
+    font-family: "Raleway", sans-serif;
+    font-size: 30px;
 }
-.time 
-.time-long {
-	font-family: 'Inconsolata', monospace;
+
+/* Time display font style */
+.time, .time-long {
+    font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
