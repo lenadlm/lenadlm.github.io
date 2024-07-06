@@ -33,11 +33,11 @@ p.font-rlw {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
 /* Navbar Button Animation */
-.navbar a.btn {
+.nav a.btn {
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
-.navbar a.btn:hover {
+.nav a.btn:hover {
     transform: scale(1.1);
     background-color: #28a745; /* Adjust color as needed */
 }
@@ -55,8 +55,8 @@ footer a img:hover {
 /* Badge Wiggle Animation */
 @keyframes wiggle {
     0% { transform: rotate(0); }
-    25% { transform: rotate(3deg); }
-    75% { transform: rotate(-3deg); }
+    25% { transform: rotate(6deg); }
+    75% { transform: rotate(-6deg); }
     100% { transform: rotate(0); }
 }
 
