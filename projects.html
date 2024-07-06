@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags for basic page information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Projects-Leonard">
+    <meta property="og:description" content="Welcome to my webpage!">
+    <meta property="og:image" content="images/leo-100.png">
+    <meta property="og:image:alt" content="my logo">
+    <meta property="og:url" content="https://lenadlm.github.io">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="lenadlm">
+    <meta property="og:locale" content="en_US">
+    
     <title>Projects-Leonard</title>
     
     <!-- Link to the same CSS file as used in index.html -->
@@ -25,10 +35,10 @@
         <div class="col-11 mx-auto sticky-top">
             <nav class="navbar bg-body-secondary rounded">
                 <form class="container-fluid justify-content-start">
-                    <a href="#home" class="btn btn-outline-success me-2" type="button">Home</a>
-                    <a href="#about" class="btn btn-outline-success me-2" type="button">About</a>
-                    <a href="projects.html" class="btn btn-outline-success me-2" type="button">Contact</a>
-                    <a href="#contact" class="btn btn-outline-success me-2" type="button">Contact</a>
+                    <a href="index.html#home" class="btn btn-outline-success me-2" type="button">Home</a>
+                    <a href="index.html#about" class="btn btn-outline-success me-2" type="button">About</a>
+                    <a href="projects.html" class="btn btn-outline-success me-2" type="button">Projects</a>
+                    <a href="index.html#contact" class="btn btn-outline-success me-2" type="button">Contacts</a>
                     <span class="time ms-auto">00:00 AM</span>
                 </form>
             </nav>
@@ -37,8 +47,8 @@
 
     <!-- First Project Section -->
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
+        <div class="row my-5" id="project-1">
+            <div class="class="col-10 mx-auto p-5 bg-opacity"">
                 <h2 class="text-center">Project 1</h2>
                 <p class="lead text-center">Description of Project 1...</p>
                 <!-- Add details of Project 1 here -->
@@ -48,8 +58,8 @@
 
     <!-- Second Project Section -->
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
+        <div class="row my-5" id="project-2">
+            <div class="class="col-10 mx-auto p-5 bg-opacity"">
                 <h2 class="text-center">Project 2</h2>
                 <p class="lead text-center">Description of Project 2...</p>
                 <!-- Add details of Project 2 here -->
@@ -58,11 +68,10 @@
     </div>
 
     <!-- Footer Section (copied from index.html) -->
-    <footer>
+    <footer class="badge-wiggle">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-12 text-center">
-                    <p>&copy; 2024 Leonard Mbelle. All rights reserved.</p>
                     <p class="justify-content-center">
                         <a href="https://github.com/lenadlm" target="_blank">
                             <img src="https://img.shields.io/badge/GitHub-0A0A0A?syle=plastic&logo=github&logoColor=white" alt="GitHub"></a>
@@ -82,6 +91,7 @@
                         <a href="https://hits.seeyoufarm.com">
                             <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Flenadlm.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
                     </p> 
+                    <p>&copy; 2024 LM. All rights reserved.</p>
 
                 </div>
             </div>
