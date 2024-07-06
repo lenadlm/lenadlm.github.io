@@ -47,9 +47,9 @@ setInterval(updateTime, 5000); // Update every 5 seconds
 timeElement.addEventListener('mouseenter', showLongTime);
 timeElement.addEventListener('mouseleave', hideLongTime);
 
-// Wiggle badges in the footer
-// Select all badge images in the footer
-const badgeImages = document.querySelectorAll('footer a img');
+
+// Select all badge images 
+const badgeImages = document.querySelectorAll('.badge img');
 
 // Function to add wiggle animation
 function addWiggleAnimation() {
@@ -66,4 +66,3 @@ badgeImages.forEach(badge => {
     badge.addEventListener('mouseenter', addWiggleAnimation);
     badge.addEventListener('mouseleave', removeWiggleAnimation);
 });
-
