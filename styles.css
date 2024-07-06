@@ -1,24 +1,65 @@
+/* Set body background with image and properties */
 body {
-	background-image: url("images/bg2.png");
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
+    background-image: url("images/bg2.png");
+    background-size: cover; /* Ensure background covers entire viewport */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-attachment: fixed; /* Fix background position while scrolling */
 }
+
+/* Background opacity overlay */
 .bg-opacity {
-	background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.75); /* 75% white opacity */
 }
-.custom-col-h	{
-	height: 400px;
+
+/* Custom height for columns */
+.custom-col-h {
+    height: 400px; /* Fixed height for columns */
 }
+
+/* Font style for Montserrat */
 .font-mnt {
-	font-family: "Montserrat" sans-serif;
-	font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
 }
-p.font-rlw	{
-	font-family: "Raleway" sans-serif;
-	font-size: 30px;
+
+/* Font style for Raleway paragraphs */
+p.font-rlw {
+    font-family: "Raleway", sans-serif;
+    font-size: 30px;
 }
-.time 
-.time-long {
-	font-family: 'Inconsolata', monospace;
+
+/* Time display font style */
+.time, .time-long {
+    font-family: 'Inconsolata', monospace; /* Monospace font for time display */
+}
+/* Navbar Button Animation */
+.navbar a.btn {
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.navbar a.btn:hover {
+    transform: scale(1.1);
+    background-color: #28a745; /* Adjust color as needed */
+}
+
+/* Footer Badge Animation */
+footer a img {
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+footer a img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Badge Wiggle Animation */
+@keyframes wiggle {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(3deg); }
+    75% { transform: rotate(-3deg); }
+    100% { transform: rotate(0); }
+}
+
+.badge-wiggle {
+    animation: wiggle 0.5s ease-in-out;
 }
