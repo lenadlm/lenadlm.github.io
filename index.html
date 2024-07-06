@@ -1,169 +1,147 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-
-	<!-- Basic Page Needs - opengraph
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<meta property="og:title" content="leonard - my profile">
-	<meta property="og:description" content="Hello there, Welcome to my website!">
-	<meta property="og:image" content="images/leo-100.png">
-	<meta property="og:image:alt" content="my logo">
-	<meta property="og:url" content="https://lenadlm.github.io">
-	<meta property="og:type" content="website">
-	<meta property="og:site_name" content="lenadlm">
-	<meta property="og:locale" content="en_US">
-	<meta charset="UTF-8">
-	<title>leonard - my profile</title>
-	
-	<!-- Mobile Specific Metas
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	
-	<!-- FONT
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Raleway' >
-
-	<!-- Bootstrap CSS
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD' crossorigin='anonymous'>
-	
-	<!-- Custom CSS
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<link rel='stylesheet' type='text/css' href='styles.css'>
-
-	<!-- Favicon
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-	<link rel="manifest" href="images/site.webmanifest">
-  
-
+    <!-- Meta tags for basic page information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Profile-Leonard">
+    <meta property="og:description" content="Welcome to my webpage!">
+    <meta property="og:image" content="images/leo-100.png">
+    <meta property="og:image:alt" content="my logo">
+    <meta property="og:url" content="https://lenadlm.github.io">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="lenadlm">
+    <meta property="og:locale" content="en_US">
+    
+    <title>Profile-Leonard</title>
+    
+    <!-- External Fonts and Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    
+    <!-- Favicon and other icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/site.webmanifest">
 </head>
-<body>	
+<body>
+    <!-- Navigation Section -->
+    <div class="d-flex p-5" id="home">
+        <div class="col-11 mx-auto sticky-top">
+            <nav class="navbar bg-body-secondary rounded">
+                <form class="container-fluid justify-content-start">
+                    <a href="#home" class="btn btn-outline-success me-2" type="button">Home</a>
+                    <a href="#about" class="btn btn-outline-success me-2" type="button">About</a>
+                    <a href="#contact" class="btn btn-outline-success me-2" type="button">Contact</a>
+                    <span class="time ms-auto">00:00 AM</span>
+                </form>
+            </nav>
+        </div>
+    </div>
 
-	<!-- Primary Page Layout
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	
-	<div class='d-flex p-5 ' id='home'>
-		<div class='col-11 mx-auto sticky-top' >
-			<nav class='navbar bg-body-secondary rounded'>
-			<form class='container-fluid justify-content-start'>	
-				<a href='#home' class='btn btn-outline-success me-2' type='button'>Home</a>
-				<a href='#about' class='btn btn-outline-success me-2' type='button'>About</a>
-				<a href='#contact' class='btn btn-outline-success me-2' type='button'>Contact</a>
-				<span class='time ms-auto'>00:00 AM</span>
-			</form>
-			</nav>
-		</div>
-	</div>
-	<div class='container-fluid  text-center my-3'>
-		<div class='row'>
-			<div class='col-md-4 offset-md-6 '>
-			  <img src='images/leo-100.png' class='img-fluid rounded-circle' alt='Profile Image'>
-			  <h1 class='display-6'>Leonard Mbelle</h1>
-			  <hr class='border-3 opacity-75'>
-			  <p class='font-rlw'>Web Development<br>
-			  & Design.</p>
-			</div>
-		</div>
-	</div>
-	<div class='container mt-5 mx-auto'>
-		<div class='row my-5' id='about'>
-			<div class='col-10 mx-auto p-5 bg-opacity'>
-				<h2>Welcome</h2>
-				<p class='lead'>A little bit about me...</p>
-				<p>I am a student of Web Development and Design. I'm currently learning<br>
-				CS50x - Introduction to Computer Science &<br>
-				CS50w - Web Programming with Python and JavaScript<br>
-				I aspire to be a great Web Developer.</p>
-				<p> Apart from looking at a screen, I enjoy football, reading and taking nature walks.</p><br>
-				<p class='lead'>Language Proficiency</p>
-				<a href='https://github.com/lenadlm'>
-					<img src='https://img.shields.io/badge/HTML-75%25-orange?syle=plastic&logo=html5&logoColor=white'
-						alt='HTML'></a>
-				<a href='https://github.com/lenadlm'>
-					<img src='https://img.shields.io/badge/CSS-70%25-green?syle=plastic&logo=css3&logoColor=white'
-						alt='CSS'></a>
-				<a href='https://github.com/lenadlm'>
-					<img src='https://img.shields.io/badge/Python-50%25-blue?syle=plastic&logo=python&logoColor=white'
-						alt='Python'></a>
-				<a href='https://github.com/lenadlm'>
-					<img src='https://img.shields.io/badge/JavaScript-50%25-yellow?syle=plastic&logo=js&logoColor=white'
-						alt='JavaScript'></a><br>
-				<a href='https://github.com/lenadlm'>
-					<img src='https://img.shields.io/badge/Linux-80%25-lightgrey?syle=plastic&logo=linux&logoColor=white'
-					     	alt='Linux'></a>
-				<a href='https://github.com/lenadlm'>
-					<img src='https://img.shields.io/badge/git-60%25-red?syle=plastic&logo=git&logoColor=white'
-					     	alt='Linux'></a>
-				<br><br>
-				<p>
-					<a href="https://twitter.com/intent/follow?screen_name=lenadlm">
-					<img src="https://img.shields.io/twitter/follow/lenadlm?style=social&logo=twitter"
-						alt="follow on Twitter"
-							target="_blank"></a>
-				</p>
-			</div>
-		</div>
-		<div class='row my-5' id='projects'>
-			<div class='col-10 mx-auto p-5 bg-opacity'>
-				<h2>Projects</h2>
-				<p class='lead'>A list of some of my projects...</p>
-			</div>
-		</div>	
-		<div class='row my-5' id='gitstats'>
-			<div class='col-10 mx-auto p-5 bg-opacity'>
-				<p class='lead'>My Github Stats</p>
-				<div class='overflow-x-auto'>
-					<img src='https://github-readme-stats.vercel.app/api/top-langs/?username=lenadlm&langs_count=5&layout=compact&theme=transparent' alt='Top Languages'><br>
-					<img src='https://github-readme-stats.vercel.app/api?username=lenadlm&include_all_commits=true&count_private=true&show_icons=true&theme=transparent' alt='My Github Stats'><br>
-					<img src='https://github-profile-trophy.vercel.app/?username=lenadlm&theme=matrix&no-bg=true&column=-1)](https://github.com/lenadlm/' alt='My Trophies'><br>
-				</div>
-			</div>
-		</div>
-		<div class='row my-5' id='contact'>
-			<div class='col-10 mx-auto px-5 pt-5 bg-opacity'>
-				<h2>Contact</h2>
-				<p class='lead'>How to contact me...</p>
-				<footer>
-					<p class='justify-content-center'>
-						<a href='https://github.com/lenadlm' target='_blank'>
-							<img src="https://img.shields.io/badge/GitHub-0A0A0A?syle=plastic&logo=github&logoColor=white" 
-								alt="GitHub"></a>
-						<a href='https://twitter.com/intent/follow?screen_name=lenadlm' target='_blank'>
-							<img src='https://img.shields.io/badge/Twitter-1DA1F2?style=plastic&logo=twitter&logoColor=white'
-								alt='follow on Twitter' ></a>
-						<a href='https://www.linkedin.com/in/lenadlm/)' target='_blank'>
-							<img src='https://img.shields.io/badge/LinkedIn-0077B5?style=plastic&logo=linkedin' 
-								alt='LinkedIn Profile' ></a>
-						<a href='mailto:lenadlm@outlook.com@gmail.com'>
-							<img src='https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=plastic&logo=microsoft-outlook&logoColor=white' 
-								alt='Email Me' ></a>
-						<a href='https://dev.to/lenadlm' target='_blank'>
-							<img src='https://img.shields.io/badge/dev.to-0A0A0A?syle=plastic&logo=dev.to&logoColor=white' 
-								alt='dev.to' ></a>						
-					</p>
-					<p>
-						<a href='https://pages.github.com/'>
-							<img src='https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-brightgreen?logo=github&logoColor=white'
-								alt='github pages'></a>
-						<a href="https://lenadlm.github.io/" target="_blank">
-						    <img src="https://vbr.wocr.tk/badge?page_id=https://lenadlm.github.io/?style=plastic" 
-							 alt="visitors"></a>
-							
-					</p>				
-				</footer>
-			<div>		
-		</div>
-	</div>
-	
-<!-- Bootstrap Script
-–––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<script src='script.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js' integrity='sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN' crossorigin='anonymous'></script>
+    <!-- Main Content Sections -->
+    <div class="container-fluid text-center my-3">
+        <!-- Profile Section -->
+        <div class="row">
+            <div class="col-md-4 offset-md-6">
+                <img src="images/leo-100.png" class="img-fluid rounded-circle" alt="Profile Image">
+                <h1 class="display-6">Leonard Mbelle</h1>
+                <hr class="border-3 opacity-75">
+                <p class="font-rlw">Web Development<br> & Design.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Section -->
+    <div class="container mt-5 mx-auto">
+        <div class="row my-5" id="about">
+            <div class="col-10 mx-auto p-5 bg-opacity">
+                <h2>Welcome</h2>
+                <p class="lead">A little bit about me...</p>
+                <p>I am a student of Web Development and Design. Currently learning CS50x - Introduction to Computer Science & CS50w - Web Programming with Python and JavaScript. I aspire to be a great Web Developer.</p>
+                <p>Apart from looking at a screen, I enjoy football, reading, and taking nature walks.</p><br>
+                <p class="lead">Language Proficiency</p>
+                <!-- Language Badges -->
+                <a href="https://github.com/lenadlm">
+                    <img src="https://img.shields.io/badge/HTML-75%25-orange?syle=plastic&logo=html5&logoColor=white" alt="HTML"></a>
+                <a href="https://github.com/lenadlm">
+                    <img src="https://img.shields.io/badge/CSS-70%25-green?syle=plastic&logo=css3&logoColor=white" alt="CSS"></a>
+                <a href="https://github.com/lenadlm">
+                    <img src="https://img.shields.io/badge/Python-50%25-blue?syle=plastic&logo=python&logoColor=white" alt="Python"></a>
+                <a href="https://github.com/lenadlm">
+                    <img src="https://img.shields.io/badge/JavaScript-50%25-yellow?syle=plastic&logo=js&logoColor=white" alt="JavaScript"></a><br>
+                <a href="https://github.com/lenadlm">
+                    <img src="https://img.shields.io/badge/Linux-80%25-lightgrey?syle=plastic&logo=linux&logoColor=white" alt="Linux"></a>
+                <a href="https://github.com/lenadlm">
+                    <img src="https://img.shields.io/badge/git-60%25-red?syle=plastic&logo=git&logoColor=white" alt="Git"></a>
+                <br><br>
+                <!-- Social Follow Badge -->
+                <p>
+                    <a href="https://twitter.com/intent/follow?screen_name=lenadlm">
+                    <img src="https://img.shields.io/twitter/follow/lenadlm?style=social&logo=twitter" alt="follow on Twitter" target="_blank"></a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Projects Section (New Page) -->
+        <div class="row my-5" id="projects">
+            <div class="col-10 mx-auto p-5 bg-opacity">
+                <h2>Projects</h2>
+                <p class="lead">A list of some of my projects...</p>
+                <!-- Add project details here -->
+            </div>
+        </div>
 
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+        <!-- GitHub Stats Section -->
+        <div class="row my-5" id="gitstats">
+            <div class="col-10 mx-auto p-5 bg-opacity">
+                <p class="lead">My GitHub Stats</p>
+                <div class="overflow-x-auto">
+                    <!-- GitHub Stats Images -->
+                    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=lenadlm&langs_count=5&layout=compact&theme=transparent" alt="Top Languages"><br>
+                    <img src="https://github-readme-stats.vercel.app/api?username=lenadlm&include_all_commits=true&count_private=true&show_icons=true&theme=transparent" alt="My GitHub Stats"><br>
+                    <img src="https://github-profile-trophy.vercel.app/?username=lenadlm&theme=matrix&no-bg=true&column=-1)](https://github.com/lenadlm/" alt="My Trophies"><br>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="row my-5" id="contact">
+            <div class="col-10 mx-auto px-5 pt-5 bg-opacity">
+                <h2>Contact</h2>
+                <p class="lead">How to contact me...</p>
+                <!-- Contact Links -->
+                <footer>
+                    <p class="justify-content-center">
+                        <a href="https://github.com/lenadlm" target="_blank">
+                            <img src="https://img.shields.io/badge/GitHub-0A0A0A?syle=plastic&logo=github&logoColor=white" alt="GitHub"></a>
+                        <a href="https://twitter.com/intent/follow?screen_name=lenadlm" target="_blank">
+                            <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=plastic&logo=twitter&logoColor=white" alt="follow on Twitter"></a>
+                        <a href="https://www.linkedin.com/in/lenadlm/" target="_blank">
+                            <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=plastic&logo=linkedin" alt="LinkedIn Profile"></a>
+                        <a href="mailto:lenadlm@outlook.com@gmail.com">
+                            <img src="https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=plastic&logo=microsoft-outlook&logoColor=white" alt="Email Me"></a>
+                        <a href="https://dev.to/lenadlm" target="_blank">
+                            <img src="https://img.shields.io/badge/dev.to-0A0A0A?syle=plastic&logo=dev.to&logoColor=white" alt="dev.to"></a>
+                    </p>
+                    <!-- Hosting and Visitor Badges -->
+                    <p>
+                        <a href="https://pages.github.com/">
+                            <img src="https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-brightgreen?logo=github&logoColor=white" alt="GitHub Pages"></a>
+                        <a href="https://lenadlm.github.io/" target="_blank">
+                            <img src="https://vbr.wocr.tk/badge?page_id=https://lenadlm.github.io/?style=plastic" alt="visitors"></a>
+                    </p>               
+                </footer>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap and Custom Scripts -->
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>
