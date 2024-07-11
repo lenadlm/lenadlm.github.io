@@ -38,7 +38,7 @@ p.font-rlw {
 }
 
 .nav a.btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.5);
     background-color: #28a745; /* Adjust color as needed */
 }
 
