@@ -55,8 +55,8 @@ footer a img:hover {
 /* Badge Wiggle Animation */
 @keyframes wiggle {
     0% { transform: rotate(0); }
-    25% { transform: rotate(6deg); }
-    75% { transform: rotate(-6deg); }
+    25% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
     100% { transform: rotate(0); }
 }
 
