@@ -32,6 +32,7 @@ p.font-rlw {
 .time, .time-long {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
+
 /* Navbar Button Animation */
 .nav a.btn {
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
@@ -62,7 +63,7 @@ footer a img:hover {
 
 /* Apply Animation to badge-wiggle */
 .badge-wiggle {
-    animation: wiggle 0.5s ease-in-out;
+    animation: wiggle 0.5s ease-in-out infinite;
 }
 
 /* Drop and Bounce Animation */
@@ -88,8 +89,10 @@ footer a img:hover {
     animation: dropAndBounce 1s ease-out;
 }
 
-/* Responsive Badge Container */
-.badge-container {
+/* Responsive Badge List */
+.badge-list {
+    list-style: none;
+    padding: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -97,14 +100,25 @@ footer a img:hover {
     margin-bottom: 20px;
 }
 
-.badge-container a {
-    flex: 1 1 150px; /* Adjust size based on screen size */
+.badge-list li {
     display: flex;
     justify-content: center;
 }
 
+.badge-list a {
+    display: flex;
+    justify-content: center;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.badge-list a:hover {
+    animation: wiggle 0.5s ease-in-out;
+    opacity: 0.8;
+    transform: scale(1.2);
+}
+
 @media (max-width: 768px) {
-    .badge-container a {
+    .badge-list li {
         flex: 1 1 100px; /* Smaller badges on smaller screens */
     }
 }
