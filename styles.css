@@ -54,7 +54,8 @@ p.font-rlw {
 /* Apply Animation to badge-list items on hover */
 .badge-list a {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
@@ -75,7 +76,7 @@ p.font-rlw {
     justify-content: flex-start; /* Align items to the left */
 }
 
-.badge-list li {
+.badge-list li:hover {
     display: flex;
     justify-content: center;
 }
