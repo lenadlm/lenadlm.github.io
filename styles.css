@@ -84,9 +84,27 @@ footer a img:hover {
 }
 
 /* Apply Animation to profile-image */
-
 #profile-image {
     animation: dropAndBounce 1s ease-out;
 }
 
+/* Responsive Badge Container */
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
 
+.badge-container a {
+    flex: 1 1 150px; /* Adjust size based on screen size */
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .badge-container a {
+        flex: 1 1 100px; /* Smaller badges on smaller screens */
+    }
+}
