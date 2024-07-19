@@ -43,16 +43,6 @@ p.font-rlw {
     background-color: #28a745; /* Adjust color as needed */
 }
 
-/* Footer Badge Animation */
-footer a img {
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-}
-
-footer a img:hover {
-    transform: scale(1.5);
-    opacity: 0.8;
-}
-
 /* Badge Wiggle Animation */
 @keyframes wiggle {
     0% { transform: rotate(0); }
@@ -61,50 +51,7 @@ footer a img:hover {
     100% { transform: rotate(0); }
 }
 
-/* Apply Animation to badge-wiggle */
-.badge-wiggle {
-    animation: wiggle 0.5s ease-in-out infinite;
-}
-
-/* Drop and Bounce Animation */
-@keyframes dropAndBounce {
-    0% {
-        transform: translateY(-100px) scale(0.7);
-        opacity: 0;
-    }
-    60% {
-        transform: translateY(0) scale(1.1);
-        opacity: 1;
-    }
-    80% {
-        transform: translateY(-20px) scale(0.95);
-    }
-    100% {
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Apply Animation to profile-image */
-#profile-image {
-    animation: dropAndBounce 1s ease-out;
-}
-
-/* Responsive Badge List */
-.badge-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.badge-list li {
-    display: flex;
-    justify-content: center;
-}
-
+/* Apply Animation to badge-list items on hover */
 .badge-list a {
     display: flex;
     justify-content: center;
@@ -114,7 +61,23 @@ footer a img:hover {
 .badge-list a:hover {
     animation: wiggle 0.5s ease-in-out;
     opacity: 0.8;
-    transform: scale(1.2);
+    transform: scale(1.2); /* Optional: Slightly enlarge on hover */
+}
+
+/* Align badge list to the left */
+.badge-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0; /* Remove margin to align left */
+    justify-content: flex-start; /* Align items to the left */
+}
+
+.badge-list li {
+    display: flex;
+    justify-content: center;
 }
 
 @media (max-width: 768px) {
