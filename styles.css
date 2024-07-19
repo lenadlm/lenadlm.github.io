@@ -63,7 +63,7 @@ footer a img:hover {
 
 /* Apply Animation to badge-wiggle */
 .badge-wiggle {
-    animation: wiggle 0.5s ease-in-out;
+    animation: wiggle 0.5s ease-in-out infinite;
 }
 
 /* Drop and Bounce Animation */
@@ -108,6 +108,13 @@ footer a img:hover {
 .badge-list a {
     display: flex;
     justify-content: center;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.badge-list a:hover {
+    animation: wiggle 0.5s ease-in-out;
+    opacity: 0.8;
+    transform: scale(1.2);
 }
 
 @media (max-width: 768px) {
