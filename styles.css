@@ -81,13 +81,13 @@ p.font-rlw {
     justify-content: center;
 }
 
-#contact {
-    align: center
-}
-
-
 @media (max-width: 768px) {
     .badge-list li {
         flex: 1 1 100px; /* Smaller badges on smaller screens */
     }
 }
+
+#contact {
+    align: center;
+}
+
