@@ -5,7 +5,6 @@ body {
     background-repeat: no-repeat; /* Prevent background image from repeating */
     background-attachment: fixed; /* Fix background position while scrolling */
     overflow-x: hidden; /* Hide horizontal scrollbar */
-    overflow-y: scroll; /* Show vertical scrollbar if needed */
 }
 
 /* Background opacity overlay */
@@ -18,19 +17,17 @@ body {
     height: 400px; /* Fixed height for columns */
 }
 
-/* Font style for Montserrat */
+/* Font styles */
 .font-mnt {
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
 }
 
-/* Font style for Raleway paragraphs */
 p.font-rlw {
     font-family: "Raleway", sans-serif;
     font-size: 30px;
 }
 
-/* Time display font style */
 .time, .time-long {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
@@ -53,11 +50,21 @@ p.font-rlw {
     100% { transform: rotate(0); }
 }
 
-/* Apply Animation to badge-list items on hover */
+/* Badge list styling */
+.badge-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Adjust spacing between icons */
+    justify-content: flex-start; /* Align items to the left */
+}
+
 .badge-list a {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
@@ -67,23 +74,14 @@ p.font-rlw {
     transform: scale(1.5); /* Optional: Slightly enlarge on hover */
 }
 
-/* Align badge list to the left */
-.badge-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 0; /* Remove margin to align left */
-    justify-content: flex-start; /* Align items to the left */
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .badge-list li {
         flex: 1 1 100px; /* Smaller badges on smaller screens */
     }
 }
 
+/* Contact section styling */
 .contact-section {
     background-color: black;
     color: white;
@@ -91,10 +89,5 @@ p.font-rlw {
 }
 
 .contact-section .badge-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+    justify-content: center; /* Center icons in the contact section */
 }
