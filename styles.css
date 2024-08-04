@@ -62,7 +62,7 @@ p.font-rlw {
 .badge-list a:hover {
     animation: wiggle 0.5s ease-in-out;
     opacity: 0.8;
-    transform: scale(1.2); /* Optional: Slightly enlarge on hover */
+    transform: scale(1.5); /* Optional: Slightly enlarge on hover */
 }
 
 /* Align badge list to the left */
@@ -74,11 +74,6 @@ p.font-rlw {
     gap: 10px;
     margin: 0; /* Remove margin to align left */
     justify-content: flex-start; /* Align items to the left */
-}
-
-.badge-list li:hover {
-    display: flex;
-    justify-content: center;
 }
 
 @media (max-width: 768px) {
