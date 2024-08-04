@@ -4,6 +4,8 @@ body {
     background-size: cover; /* Ensure background covers entire viewport */
     background-repeat: no-repeat; /* Prevent background image from repeating */
     background-attachment: fixed; /* Fix background position while scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: scroll; /* Show vertical scrollbar if needed */
 }
 
 /* Background opacity overlay */
