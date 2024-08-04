@@ -82,7 +82,17 @@ p.font-rlw {
     }
 }
 
-#contact {
-    align: center;
+.contact-section {
+    background-color: black;
+    color: white;
+    padding: 20px 0; /* Add vertical padding */
 }
 
+.contact-section .badge-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
