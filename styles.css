@@ -88,7 +88,15 @@ p.font-rlw {
     display: flex;
     flex-wrap: wrap;
     gap: 25px; /* Adjust spacing between icons */
-    justify-content: center; /* Align items to the left */
+    justify-content: center; /* Center align items */
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ensure the footer takes full height */
 }
 
 .badge-list a {
