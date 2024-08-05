@@ -21,11 +21,13 @@ body {
 .font-mnt {
     font-family: "Montserrat", sans-serif;
     font-size: 1.3rem;
+    color: white; /* Set font color to white */
 }
 
-p.font-rlw {
+.font-rlw p {
     font-family: "Raleway", sans-serif;
     font-size: 1.75rem;
+    color: white; /* Set font color to white */
 }
 
 .time .time-long {
@@ -47,7 +49,7 @@ p.font-rlw {
 
 .nav a.btn:hover {
     transform: scale(1.5);
-    background-color: #626262; /* Adjust color as needed */
+    background-color: #cfcfcf; /* Adjust color as needed */
 }
 
 /* Slide-in-right */
