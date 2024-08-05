@@ -1,6 +1,6 @@
 /* Set body background with image and properties */
 body {
-    background-image: url("images/bg2.png");
+    background-image: url("images/bg-black.png");
     background-size: cover; /* Ensure background covers entire viewport */
     background-repeat: no-repeat; /* Prevent background image from repeating */
     background-attachment: fixed; /* Fix background position while scrolling */
