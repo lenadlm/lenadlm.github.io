@@ -81,6 +81,15 @@ p.font-rlw {
     justify-content: flex-start; /* Align items to the left */
 }
 
+.badge-list-footer {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; /* Adjust spacing between icons */
+}
+
 .badge-list a {
     display: flex;
     flex-wrap: wrap;
@@ -92,15 +101,6 @@ p.font-rlw {
     animation: wiggle 0.5s ease-in-out;
     opacity: 0.8;
     transform: scale(1.5); /* Optional: Slightly enlarge on hover */
-}
-
-.badge-list-footer li {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px; /* Adjust spacing between icons */
 }
 
 /* Responsive adjustments */
