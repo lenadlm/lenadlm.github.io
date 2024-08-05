@@ -94,7 +94,7 @@ p.font-rlw {
     transform: scale(1.5); /* Optional: Slightly enlarge on hover */
 }
 
-.badge-list li {
+.badge-list-footer li {
     margin: 0 25px; /* Increase space between icons */
 }
 
