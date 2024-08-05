@@ -12,20 +12,15 @@ body {
     background-color: rgba(255, 255, 255, 0.75); /* 75% white opacity */
 }
 
-/* Custom height for columns */
-.custom-col-h {
-    height: 400px; /* Fixed height for columns */
-}
-
 /* Font styles */
 .font-mnt {
     font-family: "Montserrat", sans-serif;
-    font-size: 20px;
+    font-size: 1.3rem;
 }
 
 p.font-rlw {
     font-family: "Raleway", sans-serif;
-    font-size: 30px;
+    font-size: 1.75rem;
 }
 
 .time .time-long {
@@ -87,7 +82,7 @@ p.font-rlw {
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 25px; /* Adjust spacing between icons */
+    gap: 30px; /* Adjust spacing between icons */
     justify-content: center; /* Center align items */
 }
 
@@ -96,7 +91,7 @@ p.font-rlw {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 50%; /* Footer height */
+    height: 50vh; /* Footer height */
 }
 
 .badge-list a {
