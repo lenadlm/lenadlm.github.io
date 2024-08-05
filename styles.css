@@ -9,7 +9,7 @@ body {
 
 /* Background opacity overlay */
 .bg-opacity {
-    background-color: rgba(255, 255, 255, 0.75); /* 75% white opacity */
+    background-color: rgba(128, 128, 128, 0.5); /* 50% grey opacity */
 }
 
 /* Font styles */
