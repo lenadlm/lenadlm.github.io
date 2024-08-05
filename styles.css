@@ -88,6 +88,7 @@ p.font-rlw {
     display: flex;
     flex-wrap: wrap;
     gap: 25px; /* Adjust spacing between icons */
+    justify-content: center; /* Align items to the left */
 }
 
 .badge-list a {
