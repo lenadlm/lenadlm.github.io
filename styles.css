@@ -32,6 +32,14 @@ p.font-rlw {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
 
+/* Navbar styling */
+.navbar {
+    width: 100%; /* Full width navbar */
+    position: sticky; /* Sticky position */
+    top: 0; /* Stick to the top */
+    z-index: 1020; /* Ensure it stays on top of other elements */
+}
+
 /* Navbar Button Animation */
 .nav a.btn {
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
