@@ -96,7 +96,7 @@ p.font-rlw {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Ensure the footer takes full height */
+    min-height: 100dvh; /* Ensure the footer takes full height */
 }
 
 .badge-list a {
