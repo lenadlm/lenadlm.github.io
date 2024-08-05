@@ -98,14 +98,6 @@ p.font-rlw {
     margin: 0 25px; /* Increase space between icons */
 }
 
-.badge-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Align items to the bottom */
-    gap: 10px; /* Add some space between the badges */
-    margin-top: auto; /* Push the badge-container to the bottom */
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .badge-list li {
