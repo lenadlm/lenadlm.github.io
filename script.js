@@ -66,3 +66,23 @@ badgeImages.forEach(badge => {
     badge.addEventListener('mouseenter', addWiggleAnimation);
     badge.addEventListener('mouseleave', removeWiggleAnimation);
 });
+
+ // Intersection Observer for slide-in effect
+document.addEventListener('DOMContentLoaded', function () {
+    const observerOptions = {
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('slide-in-right-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.slide-in-right').forEach(element => {
+        observer.observe(element);
+    });
+});

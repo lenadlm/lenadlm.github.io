@@ -32,6 +32,14 @@ p.font-rlw {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
 
+/* Navbar styling */
+.navbar {
+    width: 100%; /* Full width navbar */
+    position: sticky; /* Sticky position */
+    top: 0; /* Stick to the top */
+    z-index: 1020; /* Ensure it stays on top of other elements */
+}
+
 /* Navbar Button Animation */
 .nav a.btn {
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
@@ -40,6 +48,18 @@ p.font-rlw {
 .nav a.btn:hover {
     transform: scale(1.5);
     background-color: #28a745; /* Adjust color as needed */
+}
+
+/* Slide-in-right */
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.slide-in-right-visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* Badge Wiggle Animation */
