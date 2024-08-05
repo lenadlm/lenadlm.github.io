@@ -94,16 +94,13 @@ p.font-rlw {
     transform: scale(1.5); /* Optional: Slightly enlarge on hover */
 }
 
-.badge-list li {
-    margin: 0 25px; /* Increase space between icons */
-}
-
-.badge-container {
+.badge-list-footer li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Align items to the bottom */
-    gap: 10px; /* Add some space between the badges */
-    margin-top: auto; /* Push the badge-container to the bottom */
+    flex-wrap: wrap;
+    gap: 25px; /* Adjust spacing between icons */
 }
 
 /* Responsive adjustments */
