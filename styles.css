@@ -42,12 +42,12 @@ p.font-rlw {
 
 /* Navbar Button Animation */
 .nav a.btn {
-    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
 .nav a.btn:hover {
     transform: scale(1.5);
-    background-color: #28a745; /* Adjust color as needed */
+    background-color: #626262; /* Adjust color as needed */
 }
 
 /* Slide-in-right */
@@ -83,19 +83,19 @@ p.font-rlw {
 
 .badge-list li {
     display: inline-block;
-    padding: 10px;
+    padding: 20px;
     border: 1px solid #ccc; /* Optional: Add border to each box */
-    transition: background-color 0.3s;
+    transition: background-color 0.5s;
     cursor: pointer;
 }
 
 .badge-list li:hover {
-    background-color: #f0f0f0; /* Change to desired hover color */
+    background-color: #787878; /* Change to desired hover color */
 }
 
 .badge-list img {
-    width: 48px; /* Adjust icon size as needed */
-    height: 48px; /* Adjust icon size as needed */
+    width: 56px; /* Adjust icon size as needed */
+    height: 56px; /* Adjust icon size as needed */
 }
 
 .badge-list-footer {
