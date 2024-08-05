@@ -28,7 +28,7 @@ p.font-rlw {
     font-size: 30px;
 }
 
-.time, .time-long {
+.time .time-long {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
 
@@ -96,7 +96,7 @@ p.font-rlw {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100dvh; /* Ensure the footer takes full height */
+    min-height: 50%; /* Footer height */
 }
 
 .badge-list a {
