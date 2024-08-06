@@ -2,6 +2,8 @@
 body {
     background: url("images/bg2-dark.png") no-repeat fixed center/cover;
     color: #ffffff;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    min-height: 100vh; /* Ensure minimum height is full viewport height */
 }
 
 /* Background opacity overlays */
