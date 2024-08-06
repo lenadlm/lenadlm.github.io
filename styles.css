@@ -34,6 +34,13 @@ body {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
 
+/* Set the size of the image */
+.profile-image {
+    width: 150px; /* Set desired width */
+    height: 150px; /* Set desired height */
+    object-fit: cover; /* Ensure the image covers the given dimensions without distortion */
+}
+
 /* Navbar styling */
 .navbar {
     width: 100%; /* Full width navbar */
