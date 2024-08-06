@@ -138,7 +138,7 @@ body {
 
 /* Contact section styling */
 .contact-section {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 1.0);
     color: #f0f8ff;
     padding: 20px 0; /* Add vertical padding */
     justify-content: center; /* Center icons in the contact section */
