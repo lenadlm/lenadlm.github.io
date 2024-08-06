@@ -116,7 +116,7 @@ body {
     flex-direction: column;
     align-items: center;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    color: black;
+    color: #dcdcdc;
     text-decoration: none;
 }
 
@@ -140,7 +140,7 @@ body {
 /* Contact section styling */
 .contact-section {
     background-color: rgba(0, 0, 0, 1.0);
-    color: #f0f8ff;
+    color: #ffffff;
     padding: 20px 0; /* Add vertical padding */
     justify-content: center; /* Center icons in the contact section */
 }
