@@ -19,7 +19,7 @@ body {
 
 /* Font styles */
 .font-mnt {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Montserrat" , sans-serif;
     font-size: 1.3rem;
     color: white; /* Set font color to white */
 }
@@ -145,6 +145,6 @@ body {
     padding: 20px 0; /* Add vertical padding */
 }
 
-.contact-section .badge-list {
+.contact-section .badge-list-footer {
     justify-content: center; /* Center icons in the contact section */
 }
