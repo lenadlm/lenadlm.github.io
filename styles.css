@@ -1,33 +1,32 @@
-/* Set body background with image and properties */
+/* General body styling */
 body {
-    background-image: url("images/bg2-dark.png");
-    background-size: cover; /* Ensure background covers entire viewport */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
-    background-attachment: fixed; /* Fix background position while scrolling */
-    overflow-x: hidden; /* Hide horizontal scrollbar */
+    background: url("images/bg2-dark.png") no-repeat fixed center/cover;
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    color: #ffffff;
 }
 
-/* Background opacity overlay */
-.bg-opacity {
+/* Background opacity overlays */
+.bg-opacity, .bg-navbar {
     background-color: rgba(128, 128, 128, 0.5); /* 50% grey opacity */
 }
 
-/* Navbar background */
 .bg-navbar {
-    background-color: rgba(128, 128, 128, 0.75); /* 75% grey opacity*/
+    background-color: rgba(128, 128, 128, 0.75); /* 75% grey opacity */
 }
 
 /* Font styles */
+.font-mnt, .font-rlw p, .time .time-long {
+    color: #ffffff; /* Set font color to white */
+}
+
 .font-mnt {
-    font-family: "Montserrat" , sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 1.3rem;
-    color: white; /* Set font color to white */
 }
 
 .font-rlw p {
     font-family: "Raleway", sans-serif;
     font-size: 1.75rem;
-    color: white; /* Set font color to white */
 }
 
 .time .time-long {
@@ -45,14 +44,16 @@ body {
 /* Navbar Button Animation */
 .nav a.btn {
     transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    color: #f0f8ff;
 }
 
 .nav a.btn:hover {
     transform: scale(1.5);
     background-color: #cfcfcf; /* Adjust color as needed */
+    color: #000000;
 }
 
-/* Slide-in-right */
+/* Slide-in-right animation */
 .slide-in-right {
     opacity: 0;
     transform: translateX(100px);
@@ -66,19 +67,21 @@ body {
 
 /* Badge Wiggle Animation */
 @keyframes wiggle {
-    0% { transform: rotate(0); }
+    0%, 100% { transform: rotate(0); }
     25% { transform: rotate(10deg); }
     75% { transform: rotate(-10deg); }
-    100% { transform: rotate(0); }
 }
 
 /* Badge list styling */
-.badge-list {
+.badge-list, .badge-list-footer {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
+}
+
+.badge-list {
     gap: 10px; /* Adjust spacing between icons */
     justify-content: flex-start; /* Align items to the left */
 }
@@ -89,6 +92,7 @@ body {
     border: 1px solid #ccc; /* Optional: Add border to each box */
     transition: background-color 0.5s;
     cursor: pointer;
+    text-align: center;
 }
 
 .badge-list li:hover {
@@ -101,34 +105,28 @@ body {
 }
 
 .badge-list-footer {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
     gap: 30px; /* Adjust spacing between icons */
     justify-content: center; /* Center align items */
 }
 
-.footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh; /* Footer height */
-}
-
 .badge-list a {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    color: black;
+    text-decoration: none;
 }
 
 .badge-list a:hover {
     animation: wiggle 0.5s ease-in-out;
     opacity: 0.8;
     transform: scale(1.5); /* Optional: Slightly enlarge on hover */
+}
+
+.badge-list span {
+    margin-top: 5px; /* Space between icon and text */
 }
 
 /* Responsive adjustments */
@@ -140,11 +138,17 @@ body {
 
 /* Contact section styling */
 .contact-section {
-    background-color: black;
-    color: white;
+    background-color: rgba(0, 0, 0, 1.0);
+    color: #f0f8ff;
     padding: 20px 0; /* Add vertical padding */
+    justify-content: center; /* Center icons in the contact section */
 }
 
-.contact-section .badge-list-footer {
-    justify-content: center; /* Center icons in the contact section */
+/* Footer styling */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh; /* Footer height */
 }
