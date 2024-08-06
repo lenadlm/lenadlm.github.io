@@ -1,7 +1,6 @@
 /* General body styling */
 body {
     background: url("images/bg2-dark.png") no-repeat fixed center/cover;
-    overflow-y: hidden; /* Hide vertical scrollbar */
     color: #ffffff;
 }
 
