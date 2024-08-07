@@ -30,6 +30,11 @@ body {
     font-size: 1.75rem;
 }
 
+.my-custom {
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+}
+
 .time .time-long {
     font-family: 'Inconsolata', monospace; /* Monospace font for time display */
 }
