@@ -1,176 +1,62 @@
-/* General body styling */
-body {
-    background: url("assets/images/bg2-dark.png") no-repeat fixed center/cover;
-    color: #ffffff;
-    overflow-x: hidden; /* Hide horizontal scrollbar */
-    min-height: 100vh; /* Ensure minimum height is full viewport height */
+/* Reset & Base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Inter", Arial, sans-serif; color: #111; background: #f8f9fa; line-height: 1.6; }
+img { width: 100%; display: block; }
+a { text-decoration: none; color: inherit; transition: color 0.3s; }
+.container { width: 90%; max-width: 1100px; margin: 0 auto; }
+.section-padding { padding: 4rem 0; }
+
+/* Header */
+.header { background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
+.header-inner { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+.logo { font-weight: 700; font-size: 1.25rem; color: #1e3a8a; }
+.nav-links { list-style: none; display: flex; gap: 1.5rem; }
+.nav-links a:hover { color: #2563eb; }
+.nav-toggle { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; }
+
+/* Hero */
+.hero { background: linear-gradient(to right, #1e3a8a, #2563eb); color: #fff; text-align: center; padding: 6rem 1rem; }
+.hero h1 { font-size: 2.5rem; }
+.hero h1 span { color: #22c55e; }
+.hero p { margin: 1rem 0; font-size: 1.2rem; }
+.btn { background: #22c55e; color: #fff; padding: 0.75rem 1.5rem; border-radius: 6px; transition: background 0.3s; }
+.btn:hover { background: #16a34a; }
+
+/* Skills */
+.grid { display: grid; gap: 2rem; }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); text-align: center; }
+.grid-2 { grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+.skill img { width: 60px; margin: 0 auto 0.5rem; transition: transform 0.3s; }
+.skill img:hover { animation: wobble 0.6s ease; }
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(-15deg); }
+  30% { transform: rotate(10deg); }
+  45% { transform: rotate(-10deg); }
+  60% { transform: rotate(6deg); }
+  75% { transform: rotate(-4deg); }
 }
 
-/* Background opacity overlays */
-.bg-opacity, .bg-navbar {
-    background-color: rgba(128, 128, 128, 0.5); /* 50% grey opacity */
-}
+/* Stats */
+.stats img { border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-.bg-navbar {
-    background-color: rgba(128, 128, 128, 0.75); /* 75% grey opacity */
-}
+/* Contact */
+.social { margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; }
+.social img { width: 30px; transition: transform 0.3s; }
+.social img:hover { transform: scale(1.2); }
 
-/* Font styles */
-.font-mnt, .font-rlw p, .time .time-long {
-    color: #ffffff; /* Set font color to white */
-}
+/* Footer */
+.footer { background: #111; color: #fff; padding: 1.5rem 0; text-align: center; }
 
-.font-mnt {
-    font-family: "Montserrat", sans-serif;
-    font-size: 1.3rem;
-}
+/* Scroll Reveal */
+.reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
 
-.font-rlw p {
-    font-family: "Raleway", sans-serif;
-    font-size: 1.75rem;
-}
-
-.my-custom {
-  margin-top: 8rem;
-  margin-bottom: 8rem;
-}
-
-.time .time-long {
-    font-family: 'Inconsolata', monospace; /* Monospace font for time display */
-}
-
-/* Set the size of the image */
-.profile-image {
-    width: 150px; /* Set desired width */
-    height: 150px; /* Set desired height */
-    object-fit: cover; /* Ensure the image covers the given dimensions without distortion */
-}
-
-/* Navbar styling */
-.navbar {
-    width: 100%; /* Full width navbar */
-    position: sticky; /* Sticky position */
-    top: 0; /* Stick to the top */
-    z-index: 1020; /* Ensure it stays on top of other elements */
-}
-
-/* Navbar Button Animation */
-.nav a.btn {
-    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
-    color: #f0f8ff;
-}
-
-.nav a.btn:hover {
-    transform: scale(1.5);
-    background-color: #cfcfcf; /* Adjust color as needed */
-    color: #000000;
-}
-
-/* Navbar styling */
-.navbar-brand img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Make the image circular */
-    background-color: #ffffff; /* Set background color to white */
-    padding: 2px; /* Optional: Add padding for better appearance */
-}
-
-/* Slide-in-right animation */
-.slide-in-right {
-    opacity: 0;
-    transform: translateX(100px);
-    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-}
-
-.slide-in-right-visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Badge Wiggle Animation */
-@keyframes wiggle {
-    0%, 100% { transform: rotate(0); }
-    25% { transform: rotate(10deg); }
-    75% { transform: rotate(-10deg); }
-}
-
-/* Badge list styling */
-.badge-list, .badge-list-footer {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.badge-list {
-    gap: 10px; /* Adjust spacing between icons */
-    justify-content: flex-start; /* Align items to the left */
-}
-
-.badge-list li {
-    display: inline-block;
-    padding: 20px;
-    border: 1px solid #ccc; /* Optional: Add border to each box */
-    transition: background-color 0.5s;
-    cursor: pointer;
-    text-align: center;
-}
-
-.badge-list li:hover {
-    background-color: #787878; /* Change to desired hover color */
-}
-
-.badge-list img {
-    width: 56px; /* Adjust icon size as needed */
-    height: 56px; /* Adjust icon size as needed */
-}
-
-.badge-list-footer {
-    gap: 30px; /* Adjust spacing between icons */
-    justify-content: center; /* Center align items */
-}
-
-.badge-list a {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    color: #dcdcdc;
-    text-decoration: none;
-}
-
-.badge-list a:hover {
-    animation: wiggle 0.5s ease-in-out;
-    opacity: 0.8;
-    transform: scale(1.5); /* Optional: Slightly enlarge on hover */
-}
-
-.badge-list span {
-    margin-top: 5px; /* Space between icon and text */
-}
-
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-    .badge-list li {
-        flex: 1 1 100px; /* Smaller badges on smaller screens */
-    }
-}
-
-/* Contact section styling */
-.contact-section {
-    background-color: rgba(0, 0, 0, 1.0);
-    color: #ffffff;
-    padding: 20px 0; /* Add vertical padding */
-    justify-content: center; /* Center icons in the contact section */
-}
-
-/* Footer styling */
-.footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh; /* Footer height */
+  .nav-links { display: none; flex-direction: column; background: #fff; position: absolute; right: 1rem; top: 60px; padding: 1rem; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: block; }
+  .grid-2 { grid-template-columns: 1fr; }
 }
