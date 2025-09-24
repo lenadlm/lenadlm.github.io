@@ -1,38 +1,88 @@
-// Mobile navigation toggle
-const navToggle = document.querySelector(".nav-toggle");
-const navLinks = document.querySelector(".nav-links");
+// Select the element where time will be displayed
+const timeElement = document.querySelector('.time');
 
-if (navToggle) {
-  navToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("open");
-  });
+// Function to update the time display with short format (hour and minute)
+function updateTime() {
+  try {
+    const now = new Date();
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const shortTime = now.toLocaleTimeString('en-US', options);
+    timeElement.innerHTML = shortTime;
+  } catch (error) {
+    console.error('Error updating time:', error);
+  }
 }
 
-// Smooth scroll for internal links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", e => {
-    e.preventDefault();
-    const target = document.querySelector(anchor.getAttribute("href"));
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    navLinks.classList.remove("open");
-  });
+// Function to show detailed time format on mouse enter
+function showLongTime() {
+  try {
+    const now = new Date();
+    const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+    const longTime = now.toLocaleDateString('en-US', options);
+    timeElement.classList.add('time-long');
+    timeElement.textContent = longTime;
+  } catch (error) {
+    console.error('Error showing long time:', error);
+  }
+}
+
+// Function to revert to short time format on mouse leave
+function hideLongTime() {
+  try {
+    const now = new Date();
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const shortTime = now.toLocaleTimeString('en-US', options);
+    timeElement.classList.remove('time-long');
+    timeElement.innerHTML = shortTime;
+  } catch (error) {
+    console.error('Error hiding long time:', error);
+  }
+}
+
+// Update the time initially and then every 5 seconds
+updateTime(); // Call once to initialize
+setInterval(updateTime, 5000); // Update every 5 seconds
+
+// Event listeners to show/hide detailed time format on hover
+timeElement.addEventListener('mouseenter', showLongTime);
+timeElement.addEventListener('mouseleave', hideLongTime);
+
+
+// Select all badge images 
+const badgeImages = document.querySelectorAll('.badge img');
+
+// Function to add wiggle animation
+function addWiggleAnimation() {
+    this.classList.add('badge-wiggle');
+}
+
+// Function to remove wiggle animation
+function removeWiggleAnimation() {
+    this.classList.remove('badge-wiggle');
+}
+
+// Add event listeners to each badge image
+badgeImages.forEach(badge => {
+    badge.addEventListener('mouseenter', addWiggleAnimation);
+    badge.addEventListener('mouseleave', removeWiggleAnimation);
 });
 
-// Scroll Reveal
-const revealElements = document.querySelectorAll(".reveal");
-function revealOnScroll() {
-  const windowHeight = window.innerHeight;
-  revealElements.forEach(el => {
-    const elementTop = el.getBoundingClientRect().top;
-    const revealPoint = 150; // trigger point
-    if (elementTop < windowHeight - revealPoint) {
-      el.classList.add("active");
-    } else {
-      el.classList.remove("active");
-    }
-  });
-}
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
+ // Intersection Observer for slide-in effect
+document.addEventListener('DOMContentLoaded', function () {
+    const observerOptions = {
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('slide-in-right-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.slide-in-right').forEach(element => {
+        observer.observe(element);
+    });
+});
