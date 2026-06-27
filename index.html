@@ -1,115 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta tags for basic page information -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="LM-Profile">
-    <meta property="og:description" content="Welcome to my webpage!">
-    <meta property="og:image" content="assets/images/leo-x2.svg">
-    <meta property="og:image:alt" content="my logo">
-    <meta property="og:url" content="https://lenadlm.github.io/index.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="lenadlm">
-    <meta property="og:locale" content="en_US">
-    <title>LM-Profile</title>
-    <!-- External Fonts and Bootstrap CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway|Inconsolata&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Fontawesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0-beta3/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
-    <!-- Favicon and other icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
-    <link rel="manifest" href="images/site.webmanifest">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="LM-Profile">
+<meta property="og:description" content="Welcome!">
+<meta property="og:image" content="assets/images/leo-x2.svg">
+<meta property="og:image:alt" content="my logo">
+<meta property="og:url" content="https://lenadlm.github.io/index.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="lenadlm">
+<meta property="og:locale" content="en_US">
+<title>LM-Profile</title>
+
+<!-- Fonts: mono for the terminal/dev voice, humanist sans for body copy -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inconsolata:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Fontawesome icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+<!-- Favicon and other icons -->
+<link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="assets/favicon/site.webmanifest">
 </head>
-<body>
-    <!-- Navigation Section -->
-    <nav class="navbar navbar-expand-lg bg-navbar sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#home">
-                <img src="assets/images/leo-x2.jpg"></a>
-            <a href="#home" class="btn btn-outline-light me-2">Home</a>
-            <a href="#about" class="btn btn-outline-light me-2">About</a>
-            <a href="projects.html" class="btn btn-outline-light me-2">Projects</a>
-            <a href="#contact" class="btn btn-outline-light me-2">Contacts</a>
-            <span class="time ms-auto">00:00 AM</span>
-        </div>
-    </nav>
+<body style="background-image: url('assets/images/bg2-dark.png');">
 
-    <!-- Main Content Sections -->
-    <div class="container-fluid text-center my-5" id="home">
-        <div class="row">
-            <div class="col-md-4 offset-md-6">
-                <img src="assets/images/leo-x1111.jpg" class="img-fluid rounded-circle profile-image">
-                <h1 class="display-6">Leonard Mbelle</h1>
-                <hr class="border-3 opacity-75">
-                <p class="font-rlw">Web Development<br> & Design.</p>
-            </div>
-        </div>
+<!-- Navigation -->
+<nav class="nav" id="home">
+  <a class="nav-brand" href="#home">
+    <span class="dot"></span>
+    leo<span style="color:var(--ink-faint)">@</span>lenadlm
+  </a>
+  <div class="nav-links">
+    <a href="index.html#home">home</a>
+    <a href="projects.html">projects</a>
+  </div>
+  <span class="nav-clock" id="clock">00:00 AM</span>
+</nav>
+
+<!-- Hero -->
+<section class="hero wrap">
+  <div class="avatar-frame">
+    <img src="assets/images/profile.jpg" alt="Leonard Mbelle">
+  </div>
+  <h1>Leonard Mbelle</h1>
+  <p class="role">Web development &amp; design — with a <span class="accent">homelab</span> habit that never really clocks out.</p>
+
+  <div class="terminal panel">
+    <div class="terminal-head">
+      <span></span><span></span><span></span>
     </div>
-
-    <!-- About Section -->
-    <div class="container-fluid my-5 bg-opacity" id="about">
-        <div class="col-10 mx-auto p-5 slide-in-right">
-            <p class="lead">Hello,</p>
-            <p>I'm a Logistics practitioner with an interest in Web Development and Design.</p>
-            <p class="lead">Languages & Skills</p>
-            <!-- Language Badges -->
-            <ul class="badge-list">
-                <li><a href="https://github.com/lenadlm" target="_blank"><img src="https://cdn.simpleicons.org/html5/e34f26" alt="html"><span>HTML5</span></a></li>
-                <li><a href="https://github.com/lenadlm" target="_blank"><img src="https://cdn.simpleicons.org/css3/1572b6" alt="css"><span>CSS3</span></a></li>
-                <li><a href="https://github.com/lenadlm" target="_blank"><img src="https://cdn.simpleicons.org/python/3776ab" alt="python"><span>Python</span></a></li>
-                <li><a href="https://github.com/lenadlm" target="_blank"><img src="https://cdn.simpleicons.org/javascript/f7df1e" alt="javascript"><span>JavaScript</span></a></li>
-                <li><a href="https://github.com/lenadlm" target="_blank"><img src="https://cdn.simpleicons.org/sqlite/003b57" alt="sqlite"><span>SQLite</span></a></li>
-                <li><a href="https://github.com/lenadlm" target="_blank"><img src="https://cdn.simpleicons.org/git/f05032" alt="git"><span>Git</span></a></li>
-                <li><a href="https://github.com/lenadlm" target="_blank"><img src="https://cdn.simpleicons.org/linux/fcc624" alt="linux"><span>Linux</span></a></li>
-            </ul>
-        </div>
+    <div class="terminal-body">
+      <div class="l1">leo@lenadlm:~$ <span class="target">whoami</span></div>
+      <div class="out">Logistics pro by day, web developer by night.<span class="caret"></span></div>
     </div>
+  </div>
+</section>
 
-    <!-- GitHub Stats Section -->
-    <div class="container-fluid my-5 bg-opacity" id="gitstats">
-        <div class="col-10 mx-auto p-5 slide-in-right">
-            <p class="lead">My GitHub Stats</p>
-            <div class="overflow-x-auto">
-                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=lenadlm&langs_count=5&layout=compact&theme=codeSTACKr" alt="Top Languages"><br>
-                <img src="https://github-readme-stats.vercel.app/api?username=lenadlm&include_all_commits=true&count_private=true&show_icons=true&theme=codeSTACKr" alt="My GitHub Stats"><br>
-                <img src="https://github-profile-trophy.vercel.app/?username=lenadlm&theme=matrix&no-bg=false&no_frame=true&row=2" alt="My Trophies"><br>
-            </div>
-        </div>
+<!-- About Section -->
+<section class="wrap" id="about">
+  <div class="section-head">
+    <span class="prompt-line" style="margin:0;"><span class="path">~/about $</span> <span class="cmd">cat profile.md</span></span>
+    <span class="rule"></span>
+  </div>
+  <div class="panel about-panel reveal">
+    <p>Logistics pro by day, web developer by night. I blend <strong>operational precision</strong> with creative tech to solve problems and build sleek websites. Always learning, always building.</p>
+    <p>Languages &amp; skills</p>
+    <div class="skills-grid">
+      <span class="skill-chip"><img src="https://cdn.simpleicons.org/html5/e34f26" alt="html">HTML5</span>
+      <span class="skill-chip"><img src="https://cdn.simpleicons.org/css/264de4" alt="css">CSS3</span>
+      <span class="skill-chip"><img src="https://cdn.simpleicons.org/javascript/f7df1e" alt="javascript">JavaScript</span>
+      <span class="skill-chip"><img src="https://cdn.simpleicons.org/python/3776ab" alt="python">Python</span>
+      <span class="skill-chip"><img src="https://cdn.simpleicons.org/sqlite/003b57" alt="sqlite">SQLite</span>
+      <span class="skill-chip"><img src="https://cdn.simpleicons.org/git/f05032" alt="git">Git</span>
+      <span class="skill-chip"><img src="https://cdn.simpleicons.org/linux/fcc624" alt="linux">Linux</span>
     </div>
+  </div>
+</section>
 
-    <!-- Footer Section -->
-    <div class="container-fluid contact-section" id="contact">
-        <div class="text-center p-5">
-            <p class="lead">Keep in touch!</p>
-            <footer class="footer">
-                <ul class="badge-list-footer">
-                    <li><a href="https://github.com/lenadlm" target="_blank"><i class="fa-brands fa-github fa-3x"></i></a></li>
-                    <li><a href="https://twitter.com/intent/follow?screen_name=lenadlm" target="_blank"><i class="fa-brands fa-x-twitter fa-3x"></i></a></li>
-                    <li><a href="https://www.linkedin.com/in/lenadlm/" target="_blank"><i class="fa-brands fa-linkedin-in fa-3x"></i></a></li>
-                    <li><a href="mailto:"><i class="fa-regular fa-envelope fa-3x"></i></a></li>
-                    <li><a href="https://dev.to/lenadlm" target="_blank"><i class="fa-brands fa-dev fa-3x"></i></a></li>                
-                </ul>
-                <div class="d-flex justify-content-center align-items-end mt-auto">
-                    <a href="https://hits.seeyoufarm.com" target="_blank">
-                        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Flenadlm%2F&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=hits&edge_flat=true" alt="Hits Badge"/>
-                    </a>                  
-                    <a class="copyrighted-badge" title="Copyrighted.com Registered" target="_blank" href="https://app.copyrighted.com/website/pGjsqkaxdMeKesUC">
-                        <img alt="Copyrighted.com Registered" border="0" width="125" height="20" srcset="https://static.copyrighted.com/badges/125x25/01_2_2x.png 2x" src="https://static.copyrighted.com/badges/125x25/01_2.png"/>
-                    </a>
-                </div>
-            </footer>
-        </div>
+<!-- GitHub Stats Section -->
+<section class="wrap" id="gitstats">
+  <div class="section-head">
+    <span class="prompt-line" style="margin:0;"><span class="path">~/stats $</span> <span class="cmd">fetch --streak github</span></span>
+    <span class="rule"></span>
+  </div>
+  <div class="panel stats-panel reveal">
+    <img src="https://github-readme-streak-stats.herokuapp.com/?user=lenadlm&theme=transparent&hide_border=true" alt="GitHub streak stats for lenadlm">
+    <p class="stats-note"># commit history pulled live from github-readme-streak-stats</p>
+  </div>
+</section>
+
+<!-- Contact / Footer -->
+<section class="wrap" id="contact">
+  <div class="panel contact-panel reveal">
+    <p class="lead-line">$ <span class="accent">echo</span> "keep in touch!"</p>
+    <ul class="social-row">
+      <li><a href="https://github.com/lenadlm" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a></li>
+      <li><a href="https://twitter.com/intent/follow?screen_name=lenadlm" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a></li>
+      <li><a href="https://www.linkedin.com/in/lenadlm/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>
+      <li><a href="mailto:" aria-label="Email"><i class="fa-regular fa-envelope"></i></a></li>
+      <li><a href="https://dev.to/lenadlm" target="_blank" rel="noopener" aria-label="dev.to"><i class="fa-brands fa-dev"></i></a></li>
+    </ul>
+    <div class="copyright-badge-wrap">
+      <a title="Copyrighted.com Registered" target="_blank" rel="noopener" href="https://app.copyrighted.com/website/pGjsqkaxdMeKesUC">
+        <img alt="Copyrighted.com Registered" border="0" width="125" height="20" srcset="https://static.copyrighted.com/badges/125x25/01_2_2x.png 2x" src="https://static.copyrighted.com/badges/125x25/01_2.png"/>
+      </a>
     </div>
+  </div>
+</section>
 
-    <!-- External JS and Bootstrap Bundle -->
-    <script src="assets/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/24802e7524.js" crossorigin="anonymous"></script>
-    <script src="https://static.copyrighted.com/badges/helper.js"></script> 
+<footer class="site-footer">// built &amp; maintained by lenadlm</footer>
+
+<!-- Custom JS -->
+<script src="assets/js/script.js"></script>
+<script src="https://kit.fontawesome.com/24802e7524.js" crossorigin="anonymous"></script>
+<script src="https://static.copyrighted.com/badges/helper.js"></script>
 </body>
 </html>
