@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+		<xs:element name="message">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="message_header"/>
+				<xs:element ref="message_body"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="message_header">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sender"/>
+				<xs:element ref="receiver"/>
+				<xs:element ref="module"/>
+				<xs:element ref="action"/>
+				<xs:element ref="information"/>
+				<xs:element ref="message_hash"/>
+				<xs:element ref="message_version"/>
+				<xs:element ref="message_date"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="message_body">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sd"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sd">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cus_office_country"/>
+				<xs:element ref="exit_office_sub2"/>
+				<xs:element ref="exit_office_sub3"/>
+				<xs:element ref="carrieragent"/>
+				<xs:element ref="trans_mode"/>
+				<xs:element ref="trade_movement"/>
+				<xs:element ref="exp_date"/>
+				<xs:element ref="dispatch_ctr"/>
+				<xs:element ref="unload_place"/>
+				<xs:element ref="trans_nationality"/>
+				<xs:element ref="trans_id"/>
+				<xs:element ref="voyage_no"/>
+				<xs:element ref="booking_no"/>
+				<xs:element ref="nil_cargo"/>
+				<xs:element ref="onboard"/>
+				<xs:element ref="remark"/>
+				<xs:element ref="Consolidated_TD"/>
+				<xs:element ref="td" minOccurs="0" maxOccurs="999"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="carrieragent" nillable="false">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="registered"/>
+				<xs:element ref="carrierpin"/>
+				<xs:element ref="businessnation"/>
+				<xs:element ref="businessname"/>
+				<xs:element ref="businessaddr"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Consolidated_TD" nillable="false">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ref_sd_reg_no"/>
+				<xs:element ref="ref_td_prefix"/>
+				<xs:element ref="ref_td_bill_code"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="td">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="td_prefix"/>
+				<xs:element ref="td_bill_code"/>
+				<xs:element ref="consignment_no"/>
+				<xs:element ref="ucrn"/>
+				<xs:element ref="consignee"/>
+				<xs:element ref="consignor"/>
+				<xs:element ref="notify_party_trno"/>
+				<xs:element ref="notify_name"/>
+				<xs:element ref="first_port"/>
+				<xs:element ref="first_port_date"/>
+				<xs:element ref="transport_equ_id"/>
+				<xs:element ref="routing"/>
+				<xs:element ref="final_dest_loc_city"/>
+				<xs:element ref="pay_method"/>
+				<xs:element ref="remarks"/>
+				<xs:element ref="cons_flag"/>
+				<xs:element ref="tranship_flag"/>
+				<xs:element ref="load_place"/>
+				<xs:element ref="load_date"/>
+				<xs:element ref="place_of_delivery"/>
+				<xs:element ref="direct_delivery_indicator"/>
+				<xs:element ref="cargo_type"/>
+				<xs:element ref="goods_desc"/>
+				<xs:element ref="nominated_temp_storage"/>
+				<xs:element ref="lp" minOccurs="0" maxOccurs="999"/>
+				<xs:element ref="ct" minOccurs="0" maxOccurs="999"/>
+				<xs:element ref="pd" minOccurs="0" maxOccurs="999"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="consignor" nillable="false">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="registered"/>
+				<xs:element ref="trnumber"/>
+				<xs:element ref="businessnation"/>
+				<xs:element ref="businessname"/>
+				<xs:element ref="businessaddr"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="consignee">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="registered"/>
+				<xs:element ref="trnumber"/>
+				<xs:element ref="businessnation"/>
+				<xs:element ref="businessname"/>
+				<xs:element ref="businessaddr"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="lp">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="lp_type"/>
+				<xs:element ref="lp_no"/>
+				<xs:element ref="decl_qty"/>
+				<xs:element ref="lp_marks"/>
+				<xs:element ref="decl_gross_wgt"/>
+				<xs:element ref="net_weight"/>
+				<xs:element ref="volume_unit"/>
+				<xs:element ref="volume"/>
+				<xs:element ref="goods_origin_country"/>
+				<xs:element ref="description"/>
+				<xs:element ref="commodity"/>
+				<xs:element ref="UNDangerousGoods"/>
+				<xs:element ref="remarks"/>
+				<xs:element ref="temperature"/>
+				<xs:element ref="container_ref"/>
+				<xs:element ref="chassis_num"/>
+				<xs:element ref="engine_num"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ct">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="container_num"/>
+				<xs:element ref="container_type"/>
+				<xs:element ref="iso_container_type"/>
+				<xs:element ref="seals"/>
+				<xs:element ref="remark"/>
+				<xs:element ref="movement_type"/>
+				<xs:element ref="full_empty_indicator"/>
+				<xs:element ref="eqpt_weight"/>
+				<xs:element ref="eqpt_id_status"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pd">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="pd_type"/>
+				<xs:element ref="previous_document"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Message Header Segment -->
+	<xs:element name="module" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="20"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="action" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="50"/>
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="sender" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="50"/>
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="receiver" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="50"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="information" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="200"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="message_version" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="5"/>
+				<xs:pattern value="[A-Z0-9\-_]{1,5}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="message_date" nillable="false">
+	    <xs:simpleType>
+			<xs:restriction base="xs:dateTime">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="message_hash" nillable="false">
+	    <xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="64"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<!-- SAD Segment -->
+	<xs:element name="cus_office_country">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z]{2}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="exit_office_sub2">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{3}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="exit_office_sub3">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{3}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="registered">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[Y,N]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="trnumber">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0}|[A-Z0-9_-]{11}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="carrierpin">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0}|[A-Z0-9_-]{11}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="notify_party_trno">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0}|[A-Z0-9_-]{11}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="businessnation" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="2"/>
+				<xs:pattern value="[A-Z]{0,2}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="businessname" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="200"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="businessaddr" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="country_code" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="2"/>
+				<xs:pattern value="[A-Z]{0,2}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="phone_no" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="20"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="trans_mode" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="trade_movement" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="exp_date" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:dateTime"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="dispatch_ctr" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z]{1,2}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="unload_place" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,11}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="trans_nationality" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z]{0,2}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="trans_id" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"></xs:minLength>
+				<xs:maxLength value="40"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="voyage_no" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,10}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="booking_no" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,25}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="nil_cargo" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[Y,N]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="onboard" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[Y,N]{0}|[Y,N]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="remark" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<!-- Consolidated TD -->
+	<xs:element name="ref_sd_reg_no" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0}|[A-Z0-9_-]{16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ref_td_prefix" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,6}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ref_td_bill_code" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"></xs:minLength>
+				<xs:maxLength value="18"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<!-- TD Segment -->
+	<xs:element name="td_prefix" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,6}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="td_bill_code" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"></xs:minLength>
+				<xs:maxLength value="18"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ucrn" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,35}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="notify_name" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="40"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="trailer" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="17"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="freight_cost" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="insurance_costs" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="first_port" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="11"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="first_port_date" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="transport_equ_id" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="40"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="routing" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9,_-]{0,30}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="final_dest_loc_city" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,11}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="pay_method" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,3}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="currency_code" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z]{0,3}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="consignment_no" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{1,}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="invoice_amount" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="sub_type" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[Y,N]{0}|[Y,N]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="low_value" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[Y,N]{0}|[Y,N]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="remarks" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="cons_flag" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[Y,N]{0}|[Y,N]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="tranship_flag" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[Y,N]{0}|[Y,N]{1}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="load_place" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="load_date" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:date">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="place_of_delivery" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="direct_delivery_indicator" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="cargo_type" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="goods_desc" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="nominated_temp_storage" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,6}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<!-- LP Segment -->
+	<xs:element name="lp_type" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,2}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="lp_no" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{1,8}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="decl_qty" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{1,8}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="lp_marks" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="400"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="decl_gross_wgt" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:totalDigits value="12" />
+				<xs:fractionDigits value="3" />
+				<xs:maxExclusive value="100000000.000" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="gross_weight_unit" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z]{0,2}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="net_weight" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="volume_unit" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="volume" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:totalDigits value="12" />
+				<xs:fractionDigits value="3" />
+				<xs:maxExclusive value="100000000.000" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="goods_origin_country" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="description" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"></xs:minLength>
+				<xs:maxLength value="3000"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="commodity" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{10}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UNDangerousGoods" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{0,4}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="temperature" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"></xs:minLength>
+				<xs:maxLength value="7"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="container_ref" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,11}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="chassis_num" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="35"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="engine_num" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="35"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<!-- CT Segment -->
+	<xs:element name="container_num" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,11}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="container_type" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z]{0,3}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="iso_container_type" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,4}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="container_size" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{1,2}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="seals" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"></xs:minLength>
+				<xs:maxLength value="35"></xs:maxLength>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="movement_type" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{0,1000}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="full_empty_indicator" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="fcl_lcl" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="eqpt_weight" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:totalDigits value="19"></xs:totalDigits>
+				<xs:fractionDigits value="2" />
+				<xs:maxExclusive value="10000000000000000.00" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="eqpt_id_status" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{0,16}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<!-- PD Segment -->
+	<xs:element name="pd_type" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[A-Z0-9_-]{1,3}"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="previous_document" nillable="false">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+</xs:schema>
