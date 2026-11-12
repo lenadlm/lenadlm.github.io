@@ -254,3 +254,16 @@ main section:last-of-type{ padding-bottom: 60px; }
 }
 .verr.vfix .c-diff{ font-size: 0.82rem; }
 .verr.vfix .c-diff span{ white-space: normal; overflow-wrap: anywhere; }
+
+.kw-mark{
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+.kw-field{
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  text-transform: lowercase;
+}
