@@ -271,5 +271,5 @@
     return result;
   }
 
-  return { parseSchema: parseSchema, parseXml: parseXml, validate: validate };
+  return { parseSchema: parseSchema, parseXml: parseXml, validate: validate, buildLineMap: buildLineMap };
 });

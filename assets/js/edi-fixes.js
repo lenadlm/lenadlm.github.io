@@ -56,7 +56,8 @@
         var n = next.split(rule.old).length - 1;
         next = next.split(rule.old).join(rule.new);
         rule.hits += n;
-        used[rule.old] = true;
+        if (!used[rule.old]) used[rule.old] = { rule: rule, count: 0 };
+        used[rule.old].count += n;
         touched.push(rule);
         count += n;
       }
@@ -71,11 +72,16 @@
         lines[i] = next + eol;
       }
     }
+
+    var rulesUsed = Object.keys(used).map(function (k) { return used[k]; });
+    rulesUsed.sort(function (a, b) { return a.rule.srcLine - b.rule.srcLine; });
+
     return {
       text: lines.join(''),
       changes: changes,
       count: count,
-      rulesUsed: Object.keys(used).length
+      rulesUsed: rulesUsed,
+      rulesUsedCount: rulesUsed.length
     };
   }
 
@@ -88,26 +94,34 @@
     return null;
   }
 
-  function keywordReport(doc, keywords) {
+  // Every <td> whose <description> matches a keyword, with its line number.
+  function keywordReport(doc, keywords, lineMap) {
     keywords = keywords || DEFAULT_KEYWORDS;
-    var hits = [], scanned = 0;
+    var hits = [], scanned = 0, withDesc = 0;
     var tds = doc.getElementsByTagName('td');
     for (var i = 0; i < tds.length; i++) {
-      if (localName(tds[i]) !== 'td') continue;
+      var el = tds[i];
+      if (localName(el) !== 'td') continue;
       scanned++;
-      var codeEl = childByName(tds[i], 'td_bill_code');
-      var descEl = childByName(tds[i], 'description');
+      var codeEl = childByName(el, 'td_bill_code');
+      var descEl = childByName(el, 'description');
       var desc = descEl ? String(descEl.textContent || '').replace(/\s+/g, ' ').trim() : '';
       if (!desc) continue;
+      withDesc++;
       var matched = [];
       for (var k = 0; k < keywords.length; k++) {
         if (keywords[k].re.test(desc)) matched.push(keywords[k].label);
       }
       if (matched.length) {
-        hits.push({ index: i + 1, code: codeEl ? codeEl.textContent.trim() : '', description: desc, matched: matched });
+        hits.push({
+          line: (lineMap && lineMap.get(el)) || null,
+          code: codeEl ? codeEl.textContent.trim() : '',
+          description: desc,
+          matched: matched
+        });
       }
     }
-    return { hits: hits, scanned: scanned };
+    return { hits: hits, scanned: scanned, withDescription: withDesc };
   }
 
   return {
