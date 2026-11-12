@@ -9,7 +9,9 @@
     { label: 'ZANZIBAR', src: 'zanzibar', re: /zanzibar/i },
     { label: 'CFS', src: 'c\\.?f\\.?s\\.?', re: /\bc\.?f\.?s\.?\b/i },
     { label: 'CONSOLIDATION', src: 'consolidat', re: /consolidat/i },
-    { label: 'SHIPPERS OWN', src: "shipper['\u2019]?s?[\\s-]*own", re: /shipper['\u2019]?s?[\s\u2013-]*own/i }
+    { label: 'SHIPPERS OWN', src: "shipper['\u2019]?s?[\\s-]*own", re: /shipper['\u2019]?s?[\s\u2013-]*own/i },
+    { label: 'STRIPPING', src: 'strip+ing|stripped', re: /strip+ing|stripped/i },
+    { label: 'SHIP SPARES', src: "ship['\u2019]?s?[\\s-]*spares", re: /ship['\u2019]?s?[\s\u2013-]*spares?/i }
   ];
 
   // replacements.txt: one "old,new" literal per line, applied in file order.

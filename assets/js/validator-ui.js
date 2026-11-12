@@ -261,16 +261,17 @@
 
   function renderKeywords(d, e) {
     var box = h('div', 'vkw');
-    var counts = {};
+    var counts = {}, totalHits = 0;
     e.keywordHits.forEach(function (hit) {
-      hit.matched.forEach(function (l) { counts[l] = (counts[l] || 0) + 1; });
+      hit.matched.forEach(function (l) { counts[l] = (counts[l] || 0) + 1; totalHits++; });
     });
 
     var head = h('div', 'vsec-head');
     head.appendChild(h('span', 'vsec-title', 'key words'));
     head.appendChild(h('span', 'vsec-meta',
-      fmt(e.keywordHits.length) + ' description(s) matched · ' + fmt(e.keywordStats.descriptions) +
-      ' descriptions in ' + fmt(e.keywordStats.withDescription) + ' of ' + fmt(e.keywordStats.scanned) + ' TDs'));
+      fmt(e.keywordHits.length) + ' description(s) · ' + fmt(totalHits) + ' keyword hit(s) · ' +
+      fmt(e.keywordStats.descriptions) + ' descriptions in ' + fmt(e.keywordStats.withDescription) +
+      ' of ' + fmt(e.keywordStats.scanned) + ' TDs'));
     box.appendChild(head);
 
     var chips = h('div', 'kw-chips');
