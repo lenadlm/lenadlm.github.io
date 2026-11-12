@@ -1,9 +1,11 @@
 # TODO
 
 ## Validator
-- [ ] Optional "apply replacements" step (port of MAN.PS1) before validating, with a diff view
-- [ ] Download a corrected copy of a file after replacements
+- [x] Optional "apply replacements" step (port of MAN.PS1) before validating, with a diff view
+- [x] Download a corrected copy of a file after replacements
 - [ ] Add a synthetic sample manifest button for demos
+- [x] Show keyword review (TRANSHIPMENT, ZANZIBAR, CFS, CONSOLIDATION, SHIPPERS OWN) with TD bill codes
+- [ ] Add "download all revised files" for multi-file batches
 - [ ] Check bundled XSD against the current KRA release when a new version is issued
 
 ## Site (seen in the current repo snapshot, not changed in this pass)

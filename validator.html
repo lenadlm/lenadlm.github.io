@@ -61,7 +61,8 @@
       </label>
       <input type="file" id="file-input" class="sr-only" accept=".xml,text/xml,application/xml" multiple disabled>
       <p class="schema-status" id="schema-status" role="status">loading schema...</p>
-      <p class="privacy-note"># files are parsed locally and never uploaded</p>
+      <p class="schema-status" id="repl-status" role="status">loading replacements...</p>
+      <p class="privacy-note"># files are parsed locally and never uploaded · replacements come from edi-scripts/replacements.txt</p>
     </div>
   </section>
 
@@ -70,6 +71,11 @@
       <div class="results-head">
         <span id="summary" aria-live="polite"></span>
         <span class="results-actions">
+          <label class="toggle" for="apply-toggle">
+            <input type="checkbox" id="apply-toggle" checked>
+            <span>apply replacements</span>
+          </label>
+          <button type="button" class="btn" id="fix-csv-btn">download fixes csv</button>
           <button type="button" class="btn" id="csv-btn">download csv</button>
           <button type="button" class="btn" id="clear-btn">clear</button>
         </span>
@@ -83,6 +89,7 @@
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/kra-validator.js"></script>
+<script src="assets/js/edi-fixes.js"></script>
 <script src="assets/js/validator-ui.js"></script>
 </body>
 </html>
