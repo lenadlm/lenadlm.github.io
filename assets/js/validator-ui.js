@@ -228,19 +228,51 @@
     d.appendChild(box);
   }
 
-  // ---- section: keywords found (always rendered) ----
+  // ---- section: key words (always rendered) ----
+  function highlight(text, labels) {
+    var span = h('span');
+    var parts = [{ t: text, hit: false }];
+    labels.forEach(function (label) {
+      var k = null;
+      for (var i = 0; i < keywords.length; i++) if (keywords[i].label === label) k = keywords[i];
+      if (!k) return;
+      var re = new RegExp(k.re.source, 'gi');
+      var next = [];
+      parts.forEach(function (p) {
+        if (p.hit) { next.push(p); return; }
+        var idx = 0, m;
+        while ((m = re.exec(p.t))) {
+          if (m.index > idx) next.push({ t: p.t.slice(idx, m.index), hit: false });
+          next.push({ t: m[0], hit: true });
+          idx = m.index + m[0].length;
+          if (m[0].length === 0) re.lastIndex++;
+        }
+        if (idx < p.t.length) next.push({ t: p.t.slice(idx), hit: false });
+      });
+      parts = next;
+    });
+    parts.forEach(function (p) {
+      if (!p.t) return;
+      if (p.hit) span.appendChild(h('mark', 'kw-mark', p.t));
+      else span.appendChild(document.createTextNode(p.t));
+    });
+    return span;
+  }
+
   function renderKeywords(d, e) {
     var box = h('div', 'vkw');
     var counts = {};
+    var inDesc = 0, elsewhere = 0;
     e.keywordHits.forEach(function (hit) {
+      if (hit.field === 'description') inDesc++; else elsewhere++;
       hit.matched.forEach(function (l) { counts[l] = (counts[l] || 0) + 1; });
     });
 
     var head = h('div', 'vsec-head');
     head.appendChild(h('span', 'vsec-title', 'key words'));
     head.appendChild(h('span', 'vsec-meta',
-      fmt(e.keywordHits.length) + ' TD(s) matched · ' +
-      fmt(e.keywordStats.withDescription) + ' of ' + fmt(e.keywordStats.scanned) + ' TDs have a description'));
+      fmt(inDesc) + ' in <description>' + (elsewhere ? ' · ' + fmt(elsewhere) + ' in other fields' : '') +
+      ' · ' + fmt(e.keywordStats.withDescription) + ' of ' + fmt(e.keywordStats.scanned) + ' TDs have a description'));
     box.appendChild(head);
 
     var chips = h('div', 'kw-chips');
@@ -253,16 +285,21 @@
 
     if (!e.keywordHits.length) {
       box.appendChild(h('p', 'vnote',
-        'No <description> matched any of the keywords above in this file.'));
+        'No TD description contains any of the keywords above in this file.'));
     } else {
       var rows = e.keywordHits.map(function (hit) {
         var kwCell = h('td', 'c-loc');
         hit.matched.forEach(function (l) { kwCell.appendChild(h('span', 'c-bill', l)); });
+        var textCell = h('td', 'c-desc');
+        if (hit.field !== 'description') {
+          textCell.appendChild(h('span', 'kw-field', hit.field + ': '));
+        }
+        textCell.appendChild(highlight(hit.description, hit.matched));
         return [
           hit.line ? String(hit.line) : '–',
           h('td', 'c-loc', hit.code || '–'),
           kwCell,
-          h('td', 'c-desc', hit.description)
+          textCell
         ];
       });
       box.appendChild(h('div', 'verr-wrap')).appendChild(
@@ -363,19 +400,19 @@
 
   function downloadFixCsv() {
     var rows = [[
-      'file', 'type', 'xml_line', 'td_bill_code', 'keyword',
+      'file', 'type', 'xml_line', 'td_bill_code', 'keyword', 'field',
       'rule_line', 'old_value', 'new_value', 'line_before', 'line_after', 'description'
     ]];
     results.forEach(function (e) {
       (e.changes || []).forEach(function (c) {
         c.rules.forEach(function (r) {
-          rows.push([e.name, 'replacement', c.line, c.td, '', 'replacements.txt:' + r.srcLine,
+          rows.push([e.name, 'replacement', c.line, c.td, '', '', 'replacements.txt:' + r.srcLine,
             r.old, r.new, c.before.trim(), c.after.trim(), '']);
         });
       });
       (e.keywordHits || []).forEach(function (k) {
         k.matched.forEach(function (label) {
-          rows.push([e.name, 'keyword', k.line || '', k.code, label, '', '', '', '', '', k.description]);
+          rows.push([e.name, 'keyword', k.line || '', k.code, label, k.field, '', '', '', '', '', k.description]);
         });
       });
     });

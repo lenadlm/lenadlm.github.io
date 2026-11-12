@@ -5,11 +5,11 @@
   'use strict';
 
   var DEFAULT_KEYWORDS = [
-    { label: 'TRANSHIPMENT', re: /transs?hipment/i },
-    { label: 'ZANZIBAR', re: /zanzibar/i },
-    { label: 'CFS', re: /\bcfs\b/i },
-    { label: 'CONSOLIDATION', re: /consolidat(?:ion|ed|ing)?/i },
-    { label: 'SHIPPERS OWN', re: /shipper['\u2019]?s\s+own/i }
+    { label: 'TRANSHIPMENT', src: 'transs?hip(?:ment)?', re: /transs?hip(?:ment|ped|ping)?/i },
+    { label: 'ZANZIBAR', src: 'zanzibar', re: /zanzibar/i },
+    { label: 'CFS', src: 'c\\.?f\\.?s\\.?', re: /\bc\.?f\.?s\.?\b/i },
+    { label: 'CONSOLIDATION', src: 'consolidat', re: /consolidat/i },
+    { label: 'SHIPPERS OWN', src: "shipper['\u2019]?s?[\\s-]*own", re: /shipper['\u2019]?s?[\s\u2013-]*own/i }
   ];
 
   // replacements.txt: one "old,new" literal per line, applied in file order.
@@ -94,31 +94,67 @@
     return null;
   }
 
-  // Every <td> whose <description> matches a keyword, with its line number.
+  var SKIP_FIELDS = { td_bill_code: 1, description: 1 };
+
+  function textOf(el) {
+    return String(el.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  // Every <td> whose text matches a keyword, with its line number.
+  // Namespace-safe: iterates all elements and compares localName, so
+  // <kra:td> / <ns:td> are found as well as plain <td>.
+  // Matches in <description> are primary; a hit found only elsewhere
+  // (remarks, lp_marks, ...) is still reported, with its field name.
   function keywordReport(doc, keywords, lineMap) {
     keywords = keywords || DEFAULT_KEYWORDS;
     var hits = [], scanned = 0, withDesc = 0;
-    var tds = doc.getElementsByTagName('td');
-    for (var i = 0; i < tds.length; i++) {
-      var el = tds[i];
+    var all = doc.getElementsByTagName('*');
+
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
       if (localName(el) !== 'td') continue;
       scanned++;
+
       var codeEl = childByName(el, 'td_bill_code');
       var descEl = childByName(el, 'description');
-      var desc = descEl ? String(descEl.textContent || '').replace(/\s+/g, ' ').trim() : '';
-      if (!desc) continue;
-      withDesc++;
+      var desc = descEl ? textOf(descEl) : '';
+      if (desc) withDesc++;
+      var code = codeEl ? textOf(codeEl) : '';
+      var line = (lineMap && lineMap.get(el)) || null;
+
+      var seen = {};
       var matched = [];
       for (var k = 0; k < keywords.length; k++) {
-        if (keywords[k].re.test(desc)) matched.push(keywords[k].label);
+        if (keywords[k].re.test(desc)) {
+          matched.push(keywords[k].label);
+          seen[keywords[k].label] = true;
+        }
       }
       if (matched.length) {
-        hits.push({
-          line: (lineMap && lineMap.get(el)) || null,
-          code: codeEl ? codeEl.textContent.trim() : '',
-          description: desc,
-          matched: matched
-        });
+        hits.push({ line: line, code: code, field: 'description', description: desc, matched: matched });
+      }
+
+      // keywords present in the TD but not inside <description>
+      var kids = el.childNodes;
+      for (var c = 0; c < kids.length; c++) {
+        var ch = kids[c];
+        if (ch.nodeType !== 1) continue;
+        var fname = localName(ch);
+        if (SKIP_FIELDS[fname] || ch.childNodes.length > 1) continue;
+        var text = textOf(ch);
+        if (!text) continue;
+        var extra = [];
+        for (var kk = 0; kk < keywords.length; kk++) {
+          var lbl = keywords[kk].label;
+          if (seen[lbl]) continue;
+          if (keywords[kk].re.test(text)) {
+            extra.push(lbl);
+            seen[lbl] = true;
+          }
+        }
+        if (extra.length) {
+          hits.push({ line: line, code: code, field: fname, description: text, matched: extra });
+        }
       }
     }
     return { hits: hits, scanned: scanned, withDescription: withDesc };
