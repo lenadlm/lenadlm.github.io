@@ -86,36 +86,65 @@
   }
 
   function localName(node) { return node.localName || String(node.nodeName).split(':').pop(); }
+  function lowerName(node) { return String(localName(node) || '').toLowerCase(); }
 
   function childByName(el, name) {
+    var want = String(name).toLowerCase();
     for (var c = el.firstChild; c; c = c.nextSibling) {
-      if (c.nodeType === 1 && localName(c) === name) return c;
+      if (c.nodeType === 1 && lowerName(c) === want) return c;
     }
     return null;
   }
-
-  var SKIP_FIELDS = { td_bill_code: 1, description: 1 };
 
   function textOf(el) {
     return String(el.textContent || '').replace(/\s+/g, ' ').trim();
   }
 
-  // Every <td> whose text matches a keyword, with its line number.
-  // Namespace-safe: iterates all elements and compares localName, so
-  // <kra:td> / <ns:td> are found as well as plain <td>.
-  // Matches in <description> are primary; a hit found only elsewhere
+  function hasBillCodeChild(el) {
+    for (var c = el.firstChild; c; c = c.nextSibling) {
+      if (c.nodeType === 1 && /bill_code$/.test(lowerName(c))) return true;
+    }
+    return false;
+  }
+
+  // Every TD record whose text matches a keyword, with its line number.
+  // Namespace- and case-safe: <td>, <kra:td>, <TD> all count. If no element is
+  // literally "td", any element holding a <*bill_code> child is treated as a TD.
+  // Matches inside <description> are primary; a keyword found only elsewhere
   // (remarks, lp_marks, ...) is still reported, with its field name.
   function keywordReport(doc, keywords, lineMap) {
     keywords = keywords || DEFAULT_KEYWORDS;
     var hits = [], scanned = 0, withDesc = 0;
     var all = doc.getElementsByTagName('*');
+    var names = {}, sample = [];
+    var records = [];
 
     for (var i = 0; i < all.length; i++) {
-      var el = all[i];
-      if (localName(el) !== 'td') continue;
+      var ln = lowerName(all[i]);
+      if (!names[ln] && sample.length < 15) { names[ln] = 1; sample.push(ln); }
+      else names[ln] = 1;
+      if (ln === 'td') records.push(all[i]);
+    }
+    var mode = 'td';
+    if (!records.length) {
+      mode = 'bill_code';
+      for (var j = 0; j < all.length; j++) {
+        if (all[j].nodeType === 1 && hasBillCodeChild(all[j])) records.push(all[j]);
+      }
+    }
+
+    for (var r = 0; r < records.length; r++) {
+      var el = records[r];
       scanned++;
 
-      var codeEl = childByName(el, 'td_bill_code');
+      var codeEl = childByName(el, 'td_bill_code') || childByName(el, 'ref_td_bill_code');
+      if (!codeEl) {
+        var cc = el.firstChild;
+        while (cc) {
+          if (cc.nodeType === 1 && /bill_code$/.test(lowerName(cc))) { codeEl = cc; break; }
+          cc = cc.nextSibling;
+        }
+      }
       var descEl = childByName(el, 'description');
       var desc = descEl ? textOf(descEl) : '';
       if (desc) withDesc++;
@@ -134,13 +163,14 @@
         hits.push({ line: line, code: code, field: 'description', description: desc, matched: matched });
       }
 
-      // keywords present in the TD but not inside <description>
+      // keywords present in the record but not inside <description>
       var kids = el.childNodes;
       for (var c = 0; c < kids.length; c++) {
         var ch = kids[c];
         if (ch.nodeType !== 1) continue;
-        var fname = localName(ch);
-        if (SKIP_FIELDS[fname] || ch.childNodes.length > 1) continue;
+        var fname = lowerName(ch);
+        if (fname === 'td_bill_code' || fname === 'ref_td_bill_code' || fname === 'description') continue;
+        if (ch.childNodes.length > 1) continue;
         var text = textOf(ch);
         if (!text) continue;
         var extra = [];
@@ -157,7 +187,14 @@
         }
       }
     }
-    return { hits: hits, scanned: scanned, withDescription: withDesc };
+
+    return {
+      hits: hits,
+      scanned: scanned,
+      withDescription: withDesc,
+      mode: mode,
+      sample: sample
+    };
   }
 
   return {
