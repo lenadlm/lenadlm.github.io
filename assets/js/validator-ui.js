@@ -117,7 +117,7 @@
     entry.parseError = parsed.error;
     entry.res = null;
     entry.keywordHits = [];
-    entry.keywordStats = { scanned: 0, withDescription: 0 };
+    entry.keywordStats = { scanned: 0, withDescription: 0, mode: 'td', sample: [] };
 
     if (!parsed.doc) return entry;
     // older cached copies of kra-validator.js may not expose buildLineMap
@@ -127,7 +127,7 @@
     entry.res = KraValidator.validate(parsed.doc, schema, { text: text });
     var kw = EdiFixes.keywordReport(parsed.doc, keywords, lineMap);
     entry.keywordHits = kw.hits;
-    entry.keywordStats = { scanned: kw.scanned, withDescription: kw.withDescription };
+    entry.keywordStats = { scanned: kw.scanned, withDescription: kw.withDescription, mode: kw.mode, sample: kw.sample };
     return entry;
   }
 
@@ -284,8 +284,17 @@
     box.appendChild(chips);
 
     if (!e.keywordHits.length) {
-      box.appendChild(h('p', 'vnote',
-        'No TD description contains any of the keywords above in this file.'));
+      var why;
+      if (!e.keywordStats.scanned) {
+        why = 'No TD records were recognised in this file. Element names found: ' +
+          (e.keywordStats.sample || []).join(', ') + '.';
+      } else if (!e.keywordStats.withDescription) {
+        why = fmt(e.keywordStats.scanned) + ' TD record(s) found, but none has a <description> element.';
+      } else {
+        why = 'None of the ' + fmt(e.keywordStats.withDescription) +
+          ' description(s) contains these keywords.';
+      }
+      box.appendChild(h('p', 'vnote', why));
     } else {
       var rows = e.keywordHits.map(function (hit) {
         var kwCell = h('td', 'c-loc');
