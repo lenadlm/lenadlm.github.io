@@ -175,52 +175,54 @@
     return name.replace(/\.xml$/i, '') + '.revised.xml';
   }
 
+  // strip element markup so the report shows only the value that changed
+  function plainValue(raw) {
+    var v = String(raw === null || raw === undefined ? '' : raw)
+      .replace(/<[^>]*>/g, '')
+      .replace(/[<>]/g, '')
+      .trim();
+    return v;
+  }
+
   // ---- section: what was replaced (always rendered) ----
   function renderFixes(d, e) {
     var box = h('div', 'vfixes');
     var head = h('div', 'vsec-head');
-    head.appendChild(h('span', 'vsec-title', 'replacements from replacements.txt'));
+    head.appendChild(h('span', 'vsec-title', 'replacements'));
     head.appendChild(h('span', 'vsec-meta', e.changes.length
-      ? fmt(e.replCount) + ' value(s) · ' + fmt(e.changes.length) + ' line(s) · ' +
-        fmt(e.rulesUsed.length) + ' rule(s)' + (e.applied ? '' : ' · not applied (toggle off)')
+      ? fmt(e.replCount) + ' value(s) replaced' + (e.applied ? '' : ' · not applied (toggle off)')
       : 'no matching values'));
     box.appendChild(head);
 
     if (!e.changes.length) {
       box.appendChild(h('p', 'vnote',
         rules.length
-          ? 'Nothing in this file matches the ' + fmt(rules.length) + ' rules - no value was changed.'
+          ? 'Nothing in this file matches the ' + fmt(rules.length) + ' rules in replacements.txt - no value was changed.'
           : 'replacements.txt could not be loaded, so no value was changed.'));
       d.appendChild(box);
       return;
     }
 
-    // rules that fired, with their origin line in replacements.txt
-    var ruleRows = e.rulesUsed.map(function (u) {
-      var from = h('td', 'c-diff');
-      from.appendChild(h('span', 'c-old', u.rule.old));
-      var to = h('td', 'c-diff');
-      to.appendChild(h('span', 'c-new', u.rule.new));
-      return ['replacements.txt:' + u.rule.srcLine, from, to, String(u.count) + '×'];
+    // one row per replaced value, XML tags stripped
+    var rows = [];
+    e.changes.forEach(function (c) {
+      c.rules.forEach(function (r) {
+        var td = h('td', 'c-td');
+        if (c.td) td.appendChild(h('span', 'c-bill', c.td));
+        else td.textContent = '–';
+        var from = h('td', 'c-diff');
+        var oldVal = plainValue(r.old);
+        from.appendChild(h('span', 'c-old', oldVal === '' ? '(empty)' : oldVal));
+        var to = h('td', 'c-diff');
+        var newVal = plainValue(r.new);
+        to.appendChild(h('span', 'c-new', newVal === '' ? '(empty)' : newVal));
+        td.title = 'line ' + c.line + ' · replacements.txt:' + r.srcLine;
+        rows.push([td, from, to]);
+      });
     });
-    box.appendChild(h('p', 'vsub', 'rules matched'));
-    box.appendChild(h('div', 'verr-wrap vfix-wrap')).appendChild(
-      table(['Rule', 'Old value', 'New value', 'Hits'], ruleRows)
-    );
 
-    // every changed line, with the TD it belongs to
-    var rows = e.changes.map(function (c) {
-      var td = h('td', 'c-loc');
-      if (c.td) td.appendChild(h('span', 'c-bill', 'TD ' + c.td));
-      var from = h('td', 'c-diff');
-      from.appendChild(h('span', 'c-old', c.before.trim()));
-      var to = h('td', 'c-diff');
-      to.appendChild(h('span', 'c-new', c.after.trim()));
-      return [String(c.line), td, from, to];
-    });
-    box.appendChild(h('p', 'vsub', 'line by line'));
     box.appendChild(h('div', 'verr-wrap vfix-wrap')).appendChild(
-      table(['Line', 'TD', 'Before', 'After'], rows)
+      table(['TD bill code', 'Original value', 'Replaced with'], rows, 'verr vfix')
     );
 
     d.appendChild(box);
@@ -235,7 +237,7 @@
     });
 
     var head = h('div', 'vsec-head');
-    head.appendChild(h('span', 'vsec-title', 'keywords found'));
+    head.appendChild(h('span', 'vsec-title', 'key words'));
     head.appendChild(h('span', 'vsec-meta',
       fmt(e.keywordHits.length) + ' TD(s) matched · ' +
       fmt(e.keywordStats.withDescription) + ' of ' + fmt(e.keywordStats.scanned) + ' TDs have a description'));
@@ -315,14 +317,10 @@
         return;
       }
 
-      renderFixes(d, e);
-      renderKeywords(d, e);
-      renderActions(d, e);
-
       if (!valid) {
         var errHead = h('div', 'vsec-head');
-        errHead.appendChild(h('span', 'vsec-title', 'schema errors not covered by replacements.txt'));
-        errHead.appendChild(h('span', 'vsec-meta', fmt(e.res.total) + ' error' + (e.res.total === 1 ? '' : 's')));
+        errHead.appendChild(h('span', 'vsec-title', 'schema errors'));
+        errHead.appendChild(h('span', 'vsec-meta', fmt(e.res.total) + ' error' + (e.res.total === 1 ? '' : 's') + ' · not fixable from replacements.txt'))
         d.appendChild(errHead);
 
         var wrap = h('div', 'verr-wrap');
@@ -337,6 +335,10 @@
           d.appendChild(h('p', 'vnote', 'Showing the first ' + fmt(e.res.errors.length) + ' of ' + fmt(e.res.total) + ' errors. Download the CSV for the capped list.'));
         }
       }
+
+      renderFixes(d, e);
+      renderKeywords(d, e);
+      renderActions(d, e);
       list.appendChild(d);
     });
   }

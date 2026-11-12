@@ -240,3 +240,17 @@ main section:last-of-type{ padding-bottom: 60px; }
   margin: 14px 0 6px;
 }
 .vkw .c-bill{ display: block; }
+
+/* replacements: 3 equal columns, values only (no XML markup) */
+.verr.vfix{ table-layout: fixed; }
+.verr.vfix th, .verr.vfix td{ width: 33.333%; }
+.verr.vfix .c-td{
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.verr.vfix .c-diff{ font-size: 0.82rem; }
+.verr.vfix .c-diff span{ white-space: normal; overflow-wrap: anywhere; }
