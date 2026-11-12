@@ -120,7 +120,10 @@
     entry.keywordStats = { scanned: 0, withDescription: 0 };
 
     if (!parsed.doc) return entry;
-    var lineMap = KraValidator.buildLineMap(parsed.doc.documentElement, text);
+    // older cached copies of kra-validator.js may not expose buildLineMap
+    var lineMap = typeof KraValidator.buildLineMap === 'function'
+      ? KraValidator.buildLineMap(parsed.doc.documentElement, text)
+      : null;
     entry.res = KraValidator.validate(parsed.doc, schema, { text: text });
     var kw = EdiFixes.keywordReport(parsed.doc, keywords, lineMap);
     entry.keywordHits = kw.hits;
