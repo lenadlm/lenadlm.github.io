@@ -100,6 +100,16 @@
     return String(el.textContent || '').replace(/\s+/g, ' ').trim();
   }
 
+  function findDescription(el) {
+    var direct = childByName(el, 'description');
+    if (direct) return direct;
+    var all = el.getElementsByTagName('*');
+    for (var i = 0; i < all.length; i++) {
+      if (lowerName(all[i]) === 'description') return all[i];
+    }
+    return null;
+  }
+
   function hasBillCodeChild(el) {
     for (var c = el.firstChild; c; c = c.nextSibling) {
       if (c.nodeType === 1 && /bill_code$/.test(lowerName(c))) return true;
@@ -107,23 +117,24 @@
     return false;
   }
 
-  // Every TD record whose text matches a keyword, with its line number.
-  // Namespace- and case-safe: <td>, <kra:td>, <TD> all count. If no element is
-  // literally "td", any element holding a <*bill_code> child is treated as a TD.
-  // Matches inside <description> are primary; a keyword found only elsewhere
-  // (remarks, lp_marks, ...) is still reported, with its field name.
+  // Keyword scan: every <description> in the document, matched against the
+  // TD record it belongs to. Descriptions are usually one per cargo line and
+  // live deeper than a direct child of <td>, so we walk up to the nearest
+  // <td> (or bill_code-bearing record) for the bill code and line number.
+  // Only description text is tested - never remarks, marks or codes.
   function keywordReport(doc, keywords, lineMap) {
     keywords = keywords || DEFAULT_KEYWORDS;
-    var hits = [], scanned = 0, withDesc = 0;
+    var hits = [], scanned = 0, withDesc = 0, descCount = 0;
     var all = doc.getElementsByTagName('*');
     var names = {}, sample = [];
-    var records = [];
+    var records = [], descriptions = [];
 
     for (var i = 0; i < all.length; i++) {
       var ln = lowerName(all[i]);
       if (!names[ln] && sample.length < 15) { names[ln] = 1; sample.push(ln); }
       else names[ln] = 1;
       if (ln === 'td') records.push(all[i]);
+      if (ln === 'description') descriptions.push(all[i]);
     }
     var mode = 'td';
     if (!records.length) {
@@ -133,65 +144,66 @@
       }
     }
 
-    for (var r = 0; r < records.length; r++) {
-      var el = records[r];
-      scanned++;
+    var recordSet = {};
+    records.forEach(function (r) { recordSet[keyOf(r)] = r; });
 
-      var codeEl = childByName(el, 'td_bill_code') || childByName(el, 'ref_td_bill_code');
-      if (!codeEl) {
-        var cc = el.firstChild;
-        while (cc) {
-          if (cc.nodeType === 1 && /bill_code$/.test(lowerName(cc))) { codeEl = cc; break; }
-          cc = cc.nextSibling;
-        }
+    function keyOf(node) {
+      if (!node.__kvKey) node.__kvKey = 'k' + (keyOf.n = (keyOf.n || 0) + 1);
+      return node.__kvKey;
+    }
+
+    function nearestRecord(el) {
+      var n = el.parentNode;
+      while (n && n.nodeType === 1) {
+        if (recordSet[keyOf(n)]) return n;
+        n = n.parentNode;
       }
-      var descEl = childByName(el, 'description');
-      var desc = descEl ? textOf(descEl) : '';
-      if (desc) withDesc++;
-      var code = codeEl ? textOf(codeEl) : '';
-      var line = (lineMap && lineMap.get(el)) || null;
+      return null;
+    }
 
-      var seen = {};
+    function billCodeOf(rec) {
+      if (!rec) return '';
+      var kid = rec.firstChild;
+      while (kid) {
+        if (kid.nodeType === 1 && /bill_code$/.test(lowerName(kid))) return textOf(kid);
+        kid = kid.nextSibling;
+      }
+      return '';
+    }
+
+    var perRecord = {};
+    var counted = {};
+    descriptions.forEach(function (d) {
+      descCount++;
+      var rec = nearestRecord(d);
+      var desc = textOf(d);
+      if (!desc) return;
+      if (rec) {
+        var rk = keyOf(rec);
+        if (!counted[rk]) { counted[rk] = 1; withDesc++; }
+      }
       var matched = [];
       for (var k = 0; k < keywords.length; k++) {
-        if (keywords[k].re.test(desc)) {
-          matched.push(keywords[k].label);
-          seen[keywords[k].label] = true;
-        }
+        if (keywords[k].re.test(desc)) matched.push(keywords[k].label);
       }
-      if (matched.length) {
-        hits.push({ line: line, code: code, field: 'description', description: desc, matched: matched });
-      }
+      if (!matched.length) return;
+      var line = (lineMap && (lineMap.get(d) || (rec && lineMap.get(rec)))) || null;
+      hits.push({
+        line: line,
+        code: billCodeOf(rec),
+        field: 'description',
+        description: desc,
+        matched: matched
+      });
+    });
 
-      // keywords present in the record but not inside <description>
-      var kids = el.childNodes;
-      for (var c = 0; c < kids.length; c++) {
-        var ch = kids[c];
-        if (ch.nodeType !== 1) continue;
-        var fname = lowerName(ch);
-        if (fname === 'td_bill_code' || fname === 'ref_td_bill_code' || fname === 'description') continue;
-        if (ch.childNodes.length > 1) continue;
-        var text = textOf(ch);
-        if (!text) continue;
-        var extra = [];
-        for (var kk = 0; kk < keywords.length; kk++) {
-          var lbl = keywords[kk].label;
-          if (seen[lbl]) continue;
-          if (keywords[kk].re.test(text)) {
-            extra.push(lbl);
-            seen[lbl] = true;
-          }
-        }
-        if (extra.length) {
-          hits.push({ line: line, code: code, field: fname, description: text, matched: extra });
-        }
-      }
-    }
+    records.forEach(function (r) { if (r) scanned++; });
 
     return {
       hits: hits,
       scanned: scanned,
       withDescription: withDesc,
+      descriptions: descCount,
       mode: mode,
       sample: sample
     };

@@ -117,7 +117,7 @@
     entry.parseError = parsed.error;
     entry.res = null;
     entry.keywordHits = [];
-    entry.keywordStats = { scanned: 0, withDescription: 0, mode: 'td', sample: [] };
+    entry.keywordStats = { scanned: 0, withDescription: 0, descriptions: 0, mode: 'td', sample: [] };
 
     if (!parsed.doc) return entry;
     // older cached copies of kra-validator.js may not expose buildLineMap
@@ -127,7 +127,7 @@
     entry.res = KraValidator.validate(parsed.doc, schema, { text: text });
     var kw = EdiFixes.keywordReport(parsed.doc, keywords, lineMap);
     entry.keywordHits = kw.hits;
-    entry.keywordStats = { scanned: kw.scanned, withDescription: kw.withDescription, mode: kw.mode, sample: kw.sample };
+    entry.keywordStats = { scanned: kw.scanned, withDescription: kw.withDescription, descriptions: kw.descriptions, mode: kw.mode, sample: kw.sample };
     return entry;
   }
 
@@ -262,17 +262,15 @@
   function renderKeywords(d, e) {
     var box = h('div', 'vkw');
     var counts = {};
-    var inDesc = 0, elsewhere = 0;
     e.keywordHits.forEach(function (hit) {
-      if (hit.field === 'description') inDesc++; else elsewhere++;
       hit.matched.forEach(function (l) { counts[l] = (counts[l] || 0) + 1; });
     });
 
     var head = h('div', 'vsec-head');
     head.appendChild(h('span', 'vsec-title', 'key words'));
     head.appendChild(h('span', 'vsec-meta',
-      fmt(inDesc) + ' in <description>' + (elsewhere ? ' · ' + fmt(elsewhere) + ' in other fields' : '') +
-      ' · ' + fmt(e.keywordStats.withDescription) + ' of ' + fmt(e.keywordStats.scanned) + ' TDs have a description'));
+      fmt(e.keywordHits.length) + ' description(s) matched · ' + fmt(e.keywordStats.descriptions) +
+      ' descriptions in ' + fmt(e.keywordStats.withDescription) + ' of ' + fmt(e.keywordStats.scanned) + ' TDs'));
     box.appendChild(head);
 
     var chips = h('div', 'kw-chips');
@@ -289,7 +287,7 @@
         why = 'No TD records were recognised in this file. Element names found: ' +
           (e.keywordStats.sample || []).join(', ') + '.';
       } else if (!e.keywordStats.withDescription) {
-        why = fmt(e.keywordStats.scanned) + ' TD record(s) found, but none has a <description> element.';
+        why = fmt(e.keywordStats.scanned) + ' TD record(s) found, but none contains a <description> element.';
       } else {
         why = 'None of the ' + fmt(e.keywordStats.withDescription) +
           ' description(s) contains these keywords.';
@@ -300,9 +298,6 @@
         var kwCell = h('td', 'c-loc');
         hit.matched.forEach(function (l) { kwCell.appendChild(h('span', 'c-bill', l)); });
         var textCell = h('td', 'c-desc');
-        if (hit.field !== 'description') {
-          textCell.appendChild(h('span', 'kw-field', hit.field + ': '));
-        }
         textCell.appendChild(highlight(hit.description, hit.matched));
         return [
           hit.line ? String(hit.line) : '–',
