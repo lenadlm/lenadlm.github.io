@@ -230,3 +230,13 @@ main section:last-of-type{ padding-bottom: 60px; }
   background: var(--line-bright);
   border-radius: 3px;
 }
+
+.vsub{
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 14px 0 6px;
+}
+.vkw .c-bill{ display: block; }

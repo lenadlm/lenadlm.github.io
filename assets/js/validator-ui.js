@@ -94,29 +94,37 @@
       });
   }
 
-  // Runs replacements (optional) then validates the resulting document.
+  // Replacements are always computed (so the report can show them), but only
+  // written into the validated text when the toggle is on. Nothing outside
+  // replacements.txt is ever changed.
   function process(entry) {
-    entry.changes = [];
-    entry.replCount = 0;
-    entry.rawText = entry.rawText || entry.text;
-    var text = entry.rawText;
+    entry.rawText = entry.rawText || entry.text || '';
 
-    if (applyToggle.checked && rules.length) {
-      var fixed = EdiFixes.applyReplacements(text, rules);
-      text = fixed.text;
-      entry.changes = fixed.changes;
-      entry.replCount = fixed.count;
-    }
+    var preview = { changes: [], count: 0, rulesUsed: [], rulesUsedCount: 0, text: entry.rawText };
+    if (rules.length) preview = EdiFixes.applyReplacements(entry.rawText, rules);
+
+    var applied = applyToggle.checked && rules.length > 0;
+    entry.preview = preview;
+    entry.changes = preview.changes;
+    entry.replCount = preview.count;
+    entry.rulesUsed = preview.rulesUsed;
+    entry.applied = applied;
+
+    var text = applied ? preview.text : entry.rawText;
     entry.text = text;
 
     var parsed = KraValidator.parseXml(text);
     entry.parseError = parsed.error;
     entry.res = null;
     entry.keywordHits = [];
+    entry.keywordStats = { scanned: 0, withDescription: 0 };
 
     if (!parsed.doc) return entry;
+    var lineMap = KraValidator.buildLineMap(parsed.doc.documentElement, text);
     entry.res = KraValidator.validate(parsed.doc, schema, { text: text });
-    entry.keywordHits = EdiFixes.keywordReport(parsed.doc, keywords).hits;
+    var kw = EdiFixes.keywordReport(parsed.doc, keywords, lineMap);
+    entry.keywordHits = kw.hits;
+    entry.keywordStats = { scanned: kw.scanned, withDescription: kw.withDescription };
     return entry;
   }
 
@@ -126,7 +134,8 @@
       return process(entry);
     }).catch(function (err) {
       return { name: file.name, size: file.size, parseError: 'Could not read file: ' + err.message,
-        res: null, changes: [], keywordHits: [], replCount: 0 };
+        res: null, changes: [], rulesUsed: [], keywordHits: [], replCount: 0, applied: false,
+        preview: { changes: [], count: 0, rulesUsed: [] } };
     });
   }
 
@@ -163,21 +172,40 @@
     return name.replace(/\.xml$/i, '') + '.revised.xml';
   }
 
+  // ---- section: what was replaced (always rendered) ----
   function renderFixes(d, e) {
-    if (!applyToggle.checked) return;
-
     var box = h('div', 'vfixes');
+    var head = h('div', 'vsec-head');
+    head.appendChild(h('span', 'vsec-title', 'replacements from replacements.txt'));
+    head.appendChild(h('span', 'vsec-meta', e.changes.length
+      ? fmt(e.replCount) + ' value(s) · ' + fmt(e.changes.length) + ' line(s) · ' +
+        fmt(e.rulesUsed.length) + ' rule(s)' + (e.applied ? '' : ' · not applied (toggle off)')
+      : 'no matching values'));
+    box.appendChild(head);
+
     if (!e.changes.length) {
-      box.appendChild(h('p', 'vnote', 'Replacements applied: no matching values in this file.'));
+      box.appendChild(h('p', 'vnote',
+        rules.length
+          ? 'Nothing in this file matches the ' + fmt(rules.length) + ' rules - no value was changed.'
+          : 'replacements.txt could not be loaded, so no value was changed.'));
       d.appendChild(box);
       return;
     }
 
-    var head = h('div', 'vsec-head');
-    head.appendChild(h('span', 'vsec-title', 'replacements applied'));
-    head.appendChild(h('span', 'vsec-meta', fmt(e.replCount) + ' value(s) · ' + fmt(e.changes.length) + ' line(s)'));
-    box.appendChild(head);
+    // rules that fired, with their origin line in replacements.txt
+    var ruleRows = e.rulesUsed.map(function (u) {
+      var from = h('td', 'c-diff');
+      from.appendChild(h('span', 'c-old', u.rule.old));
+      var to = h('td', 'c-diff');
+      to.appendChild(h('span', 'c-new', u.rule.new));
+      return ['replacements.txt:' + u.rule.srcLine, from, to, String(u.count) + '×'];
+    });
+    box.appendChild(h('p', 'vsub', 'rules matched'));
+    box.appendChild(h('div', 'verr-wrap vfix-wrap')).appendChild(
+      table(['Rule', 'Old value', 'New value', 'Hits'], ruleRows)
+    );
 
+    // every changed line, with the TD it belongs to
     var rows = e.changes.map(function (c) {
       var td = h('td', 'c-loc');
       if (c.td) td.appendChild(h('span', 'c-bill', 'TD ' + c.td));
@@ -187,6 +215,7 @@
       to.appendChild(h('span', 'c-new', c.after.trim()));
       return [String(c.line), td, from, to];
     });
+    box.appendChild(h('p', 'vsub', 'line by line'));
     box.appendChild(h('div', 'verr-wrap vfix-wrap')).appendChild(
       table(['Line', 'TD', 'Before', 'After'], rows)
     );
@@ -194,33 +223,45 @@
     d.appendChild(box);
   }
 
+  // ---- section: keywords found (always rendered) ----
   function renderKeywords(d, e) {
     var box = h('div', 'vkw');
+    var counts = {};
+    e.keywordHits.forEach(function (hit) {
+      hit.matched.forEach(function (l) { counts[l] = (counts[l] || 0) + 1; });
+    });
+
     var head = h('div', 'vsec-head');
-    head.appendChild(h('span', 'vsec-title', 'keyword review'));
-    head.appendChild(h('span', 'vsec-meta', fmt(e.keywordHits.length) + ' matching TD(s)'));
+    head.appendChild(h('span', 'vsec-title', 'keywords found'));
+    head.appendChild(h('span', 'vsec-meta',
+      fmt(e.keywordHits.length) + ' TD(s) matched · ' +
+      fmt(e.keywordStats.withDescription) + ' of ' + fmt(e.keywordStats.scanned) + ' TDs have a description'));
+    box.appendChild(head);
 
     var chips = h('div', 'kw-chips');
-    var matchedLabels = {};
-    e.keywordHits.forEach(function (hit) { hit.matched.forEach(function (l) { matchedLabels[l] = true; }); });
     keywords.forEach(function (k) {
-      chips.appendChild(h('span', 'kw-chip' + (matchedLabels[k.label] ? ' is-hit' : ''), k.label));
+      var n = counts[k.label] || 0;
+      chips.appendChild(h('span', 'kw-chip' + (n ? ' is-hit' : ''),
+        k.label + ' · ' + (n ? n + ' found' : 'none')));
     });
-    box.appendChild(head);
     box.appendChild(chips);
 
     if (!e.keywordHits.length) {
-      box.appendChild(h('p', 'vnote', 'No <description> matched the keywords above.'));
+      box.appendChild(h('p', 'vnote',
+        'No <description> matched any of the keywords above in this file.'));
     } else {
       var rows = e.keywordHits.map(function (hit) {
+        var kwCell = h('td', 'c-loc');
+        hit.matched.forEach(function (l) { kwCell.appendChild(h('span', 'c-bill', l)); });
         return [
-          hit.matched.join(' · '),
+          hit.line ? String(hit.line) : '–',
           h('td', 'c-loc', hit.code || '–'),
+          kwCell,
           h('td', 'c-desc', hit.description)
         ];
       });
       box.appendChild(h('div', 'verr-wrap')).appendChild(
-        table(['Keyword', 'TD bill code', 'Description'], rows)
+        table(['Line', 'TD bill code', 'Keyword', 'Description'], rows)
       );
     }
     d.appendChild(box);
@@ -228,12 +269,13 @@
 
   function renderActions(d, e) {
     var bar = h('div', 'vact');
-    if (applyToggle.checked && e.changes.length) {
+    if (e.changes.length) {
       var btn = h('button', 'btn is-accent', 'download revised xml');
       btn.type = 'button';
-      btn.addEventListener('click', function () { download(revisedName(e.name), e.text); });
+      btn.addEventListener('click', function () { download(revisedName(e.name), e.preview.text); });
       bar.appendChild(btn);
-      bar.appendChild(h('span', 'vnote', 'only the listed values change - encoding, order and structure are untouched'));
+      bar.appendChild(h('span', 'vnote',
+        'only the ' + fmt(e.changes.length) + ' listed line(s) change - encoding, order and structure are untouched'));
     }
     d.appendChild(bar);
   }
@@ -241,43 +283,56 @@
   function render() {
     panel.hidden = !results.length;
     var ok = results.filter(isValid).length;
-    var fixes = results.reduce(function (n, e) { return n + (e.replCount || 0); }, 0);
+    var fixes = results.reduce(function (n, e) { return n + (e.changes || []).length; }, 0);
+    var hits = results.reduce(function (n, e) { return n + (e.keywordHits || []).length; }, 0);
     summary.textContent = results.length + ' file' + (results.length === 1 ? '' : 's') +
       ' · ' + ok + ' valid · ' + (results.length - ok) + ' invalid' +
-      (fixes ? ' · ' + fmt(fixes) + ' replaceable value(s)' : '');
+      ' · ' + fmt(fixes) + ' line(s) fixed by replacements.txt' +
+      ' · ' + fmt(hits) + ' keyword match(es)';
     list.textContent = '';
+
     results.forEach(function (e) {
       var valid = isValid(e);
       var d = h('details', 'vfile ' + (valid ? 'is-ok' : 'is-bad'));
-      if (!valid && results.length <= 3) d.open = true;
+      if (!valid || e.changes.length) d.open = true;
+
       var s = h('summary');
       s.appendChild(h('span', 'vbadge', valid ? 'VALID' : 'INVALID'));
       s.appendChild(h('span', 'vname', e.name));
       var meta = e.parseError ? 'not well-formed'
-        : fmt(e.res.stats.td) + ' TDs · ' + (valid ? 'no errors' : fmt(e.res.total) + ' error' + (e.res.total === 1 ? '' : 's'));
-      if (e.replCount) meta += ' · ' + fmt(e.replCount) + ' fixed after replacement';
+        : fmt(e.res.stats.td) + ' TDs · ' + (valid ? 'no schema errors' : fmt(e.res.total) + ' schema error' + (e.res.total === 1 ? '' : 's'));
+      if (e.changes.length) meta += ' · ' + fmt(e.changes.length) + ' line(s) fixed';
       s.appendChild(h('span', 'vmeta', meta));
       d.appendChild(s);
 
       if (e.parseError) {
         d.appendChild(h('pre', 'vparse', e.parseError));
-      } else {
-        if (!valid) {
-          var wrap = h('div', 'verr-wrap');
-          var rows = e.res.errors.map(function (er) {
-            var loc = h('td', 'c-loc', er.path);
-            if (er.ctx) loc.appendChild(h('span', 'c-bill', 'TD ' + er.ctx));
-            return [er.line ? String(er.line) : '–', loc, er.message];
-          });
-          wrap.appendChild(table(['Line', 'Location', 'Problem'], rows));
-          d.appendChild(wrap);
-          if (e.res.truncated) {
-            d.appendChild(h('p', 'vnote', 'Showing the first ' + fmt(e.res.errors.length) + ' of ' + fmt(e.res.total) + ' errors. Download the CSV for the capped list, fix, and re-run.'));
-          }
+        d.appendChild(h('p', 'vnote', 'Could not parse, so replacements were not written. The raw text is unchanged.'));
+        list.appendChild(d);
+        return;
+      }
+
+      renderFixes(d, e);
+      renderKeywords(d, e);
+      renderActions(d, e);
+
+      if (!valid) {
+        var errHead = h('div', 'vsec-head');
+        errHead.appendChild(h('span', 'vsec-title', 'schema errors not covered by replacements.txt'));
+        errHead.appendChild(h('span', 'vsec-meta', fmt(e.res.total) + ' error' + (e.res.total === 1 ? '' : 's')));
+        d.appendChild(errHead);
+
+        var wrap = h('div', 'verr-wrap');
+        var rows = e.res.errors.map(function (er) {
+          var loc = h('td', 'c-loc', er.path);
+          if (er.ctx) loc.appendChild(h('span', 'c-bill', 'TD ' + er.ctx));
+          return [er.line ? String(er.line) : '–', loc, er.message];
+        });
+        wrap.appendChild(table(['Line', 'Location', 'Problem'], rows));
+        d.appendChild(wrap);
+        if (e.res.truncated) {
+          d.appendChild(h('p', 'vnote', 'Showing the first ' + fmt(e.res.errors.length) + ' of ' + fmt(e.res.total) + ' errors. Download the CSV for the capped list.'));
         }
-        renderFixes(d, e);
-        renderKeywords(d, e);
-        renderActions(d, e);
       }
       list.appendChild(d);
     });
@@ -296,20 +351,27 @@
     var rows = [['file', 'line', 'location', 'td_bill_code', 'problem']];
     results.forEach(function (e) {
       if (e.parseError) rows.push([e.name, '', '', '', e.parseError]);
-      else e.res.errors.forEach(function (er) { rows.push([e.name, er.line, er.path, er.ctx, er.message]); });
+      else if (e.res) e.res.errors.forEach(function (er) { rows.push([e.name, er.line, er.path, er.ctx, er.message]); });
     });
     saveCsv('kra-validation-report.csv', rows);
   }
 
   function downloadFixCsv() {
-    var rows = [['file', 'type', 'line', 'td_bill_code', 'keyword_or_rule', 'before', 'after']];
+    var rows = [[
+      'file', 'type', 'xml_line', 'td_bill_code', 'keyword',
+      'rule_line', 'old_value', 'new_value', 'line_before', 'line_after', 'description'
+    ]];
     results.forEach(function (e) {
       (e.changes || []).forEach(function (c) {
-        var ruleList = c.rules.map(function (r) { return r.old + ' -> ' + r.new; }).join(' | ');
-        rows.push([e.name, 'replacement', c.line, c.td, ruleList, c.before.trim(), c.after.trim()]);
+        c.rules.forEach(function (r) {
+          rows.push([e.name, 'replacement', c.line, c.td, '', 'replacements.txt:' + r.srcLine,
+            r.old, r.new, c.before.trim(), c.after.trim(), '']);
+        });
       });
       (e.keywordHits || []).forEach(function (k) {
-        rows.push([e.name, 'keyword', '', k.code, k.matched.join(' | '), k.description, '']);
+        k.matched.forEach(function (label) {
+          rows.push([e.name, 'keyword', k.line || '', k.code, label, '', '', '', '', '', k.description]);
+        });
       });
     });
     saveCsv('kra-fixes-report.csv', rows);
