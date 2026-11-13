@@ -4,6 +4,7 @@
 - [x] `tools.html` with KRA Validator, IT-Tools, OmniTools, Postman Web, Resources
 - [x] Nav + `aria-current="page"` on all pages, `sitemap.xml` including `tools.html`
 - [ ] Add `robots.txt` with a `Sitemap:` line
+- [x] `validator` hidden from nav; only linked from the tools page
 - [ ] Add a skip-to-content link on `tools.html` (covered by the site-wide item below)
 - [ ] Keep descriptions to one line; add a tool only if it is actually used
 
