@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-13
+
+### Added
+- `tools.html`: tools directory page with one panel per tool — KRA Validator (internal), IT-Tools, OmniTools, Postman Web and the resources list. Reuses `.panel`, `.project-feature`, `.section-head`, `.prompt-line` and `.reveal`; external links open with `target="_blank" rel="noopener"`.
+- `sitemap.xml`: index, projects, validator and tools URLs on `https://www.lenadlm.dev`.
+- Nav link to `tools` on index, projects and tools; the current page is marked with `aria-current="page"`.
+
+### Changed
+- `assets/css/styles.css`: `.tool-body` / `.tool-desc` / `.tool-link` styles, nav current-page underline, global `:focus-visible` outline, and a 420px breakpoint so the four nav links and pill buttons fit narrow screens.
+
 ## 2026-11-03
 
 ### Added

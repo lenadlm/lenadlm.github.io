@@ -1,5 +1,12 @@
 # TODO
 
+## Tools page
+- [x] `tools.html` with KRA Validator, IT-Tools, OmniTools, Postman Web, Resources
+- [x] Nav + `aria-current="page"` on all pages, `sitemap.xml` including `tools.html`
+- [ ] Add `robots.txt` with a `Sitemap:` line
+- [ ] Add a skip-to-content link on `tools.html` (covered by the site-wide item below)
+- [ ] Keep descriptions to one line; add a tool only if it is actually used
+
 ## Validator
 - [x] Optional "apply replacements" step (port of MAN.PS1) before validating, with a diff view
 - [x] Download a corrected copy of a file after replacements
@@ -16,5 +23,6 @@
 - [ ] `github-readme-streak-stats.herokuapp.com` and `hits.seeyoufarm.com` are third-party hosted badges that may no longer respond; replace or remove
 - [ ] `assets/favicon/site.webmanifest` has empty `name`/`short_name`; icon paths are root-relative
 - [ ] Delete duplicate `assets/images/site.webmanifest` and stray `assets/images/text.txt`
-- [ ] Add `meta description`, `robots.txt` and `sitemap.xml` (include `validator.html`)
+- [x] `sitemap.xml` (index, projects, validator, tools)
+- [ ] Add `meta description` to index/projects and a `robots.txt`
 - [ ] Add a skip-to-content link
