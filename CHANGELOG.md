@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-13 (2)
+
+### Changed
+- `validator` removed from the nav on every page; the validator is now reachable only from the KRA Validator panel on `tools.html`. `tools` added to the validator page nav so it still has a way back.
+
 ## 2026-11-13
 
 ### Added
