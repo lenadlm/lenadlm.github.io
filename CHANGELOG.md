@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-13 (3)
+
+### Removed
+- Hits badge (`hits.seeyoufarm.com`) from the footer of `projects.html` and `tools.html` — a third-party image that may disappear without warning. `validator.html` and `index.html` have no footer badges.
+
 ## 2026-11-13 (2)
 
 ### Changed

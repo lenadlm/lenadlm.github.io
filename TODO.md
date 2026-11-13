@@ -21,7 +21,7 @@
 - [ ] `og:image` is an SVG; export a 1200x630 PNG for social previews
 - [ ] `<a href="mailto:">` in the contact row is empty; add a real address or remove it
 - [ ] Font Awesome loads twice (cdnjs stylesheet and kit script); keep one
-- [ ] `github-readme-streak-stats.herokuapp.com` and `hits.seeyoufarm.com` are third-party hosted badges that may no longer respond; replace or remove
+- [ ] `github-readme-streak-stats.herokuapp.com` on `index.html` is a third-party hosted badge that may no longer respond; replace or remove
 - [ ] `assets/favicon/site.webmanifest` has empty `name`/`short_name`; icon paths are root-relative
 - [ ] Delete duplicate `assets/images/site.webmanifest` and stray `assets/images/text.txt`
 - [x] `sitemap.xml` (index, projects, validator, tools)
