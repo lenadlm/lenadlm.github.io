@@ -267,3 +267,26 @@ main section:last-of-type{ padding-bottom: 60px; }
   color: var(--ink-faint);
   text-transform: lowercase;
 }
+
+/* ---------------- manifest totals (top of the report) ---------------- */
+.vsum{ padding: 4px 24px 18px; }
+.vsum .vsec-head{ margin-top: 0; border-top: 0; }
+.vsum-wrap{ padding: 0; }
+.verr.vsum-table{ font-family: var(--mono); }
+.verr.vsum-table th,
+.verr.vsum-table td{ text-align: right; white-space: nowrap; }
+.verr.vsum-table th:first-child,
+.verr.vsum-table td:first-child{ text-align: left; }
+.verr.vsum-table td:not(.c-file){ color: var(--ink); font-size: 0.86rem; }
+.verr.vsum-table td.c-file{
+  color: var(--ink-faint);
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.verr.vsum-table tr.c-total td,
+.verr.vsum-table .c-total{ color: var(--accent); font-weight: 600; }
+.verr.vsum-table tbody tr:last-child td{ border-bottom: 0; }
+@media (max-width: 640px){
+  .vsum{ padding: 4px 16px 16px; }
+}

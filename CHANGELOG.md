@@ -2,6 +2,10 @@
 
 ## 2026-11-14
 
+### Added
+- `validator.html`: manifest totals table at the top of the report — one row per uploaded file with TDs (`<td_bill_code>`), containers (`<container_num>`), 20 ft (ISO type `2xxx`), 40 ft (ISO type `4xxx`), packages (sum of `<decl_qty>`) and gross weight (sum of `<decl_gross_wgt>`), plus a `total` row when more than one file is loaded. A note appears if any container's ISO type is neither `2xxx` nor `4xxx`.
+- `assets/js/edi-fixes.js`: `EdiFixes.summary(doc)` — DOM-only totals used by the page, so the counts never come from regenerated text.
+
 ### Fixed
 - `assets/js/validator-ui.js`: every file's report is now expanded on render. A file with no schema errors and no replacement matches collapsed to a one-line summary, so the key-word review — the whole point of a clean file — was hidden until the row was clicked. The file header meta now also states the keyword match count (`162 TDs · no schema errors · 21 keyword matches`).
 - Bumped the asset/build marker to `20261114a` so browsers reload the fixed bundle.

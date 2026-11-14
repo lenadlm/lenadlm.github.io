@@ -125,6 +125,7 @@
       ? KraValidator.buildLineMap(parsed.doc.documentElement, text)
       : null;
     entry.res = KraValidator.validate(parsed.doc, schema, { text: text });
+    entry.summary = typeof EdiFixes.summary === 'function' ? EdiFixes.summary(parsed.doc) : null;
     var kw = EdiFixes.keywordReport(parsed.doc, keywords, lineMap);
     entry.keywordHits = kw.hits;
     entry.keywordStats = { scanned: kw.scanned, withDescription: kw.withDescription, descriptions: kw.descriptions, mode: kw.mode, sample: kw.sample };
@@ -314,6 +315,64 @@
     d.appendChild(box);
   }
 
+  // ---- section: manifest totals (top of the report, always rendered) ----
+  function fmtWeight(n) {
+    return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function renderSummary(listEl) {
+    var rows_ = results.filter(function (e) { return e.summary; });
+    if (!rows_.length) return;
+
+    var box = h('div', 'vsum');
+    var head = h('div', 'vsec-head');
+    head.appendChild(h('span', 'vsec-title', 'summary'));
+    head.appendChild(h('span', 'vsec-meta', rows_.length > 1
+      ? 'totals per file · ' + fmt(rows_.length) + ' files'
+      : 'manifest totals'));
+    box.appendChild(head);
+
+    function cells(s) {
+      return [fmt(s.tds), fmt(s.containers), fmt(s.ft20), fmt(s.ft40), fmt(s.packages), fmtWeight(s.grossWeight)];
+    }
+
+    var rows = rows_.map(function (e) {
+      var name = h('td', 'c-file', e.name);
+      name.title = e.name;
+      return [name].concat(cells(e.summary));
+    });
+
+    var other = 0;
+    if (rows_.length > 1) {
+      var tot = { tds: 0, containers: 0, ft20: 0, ft40: 0, packages: 0, grossWeight: 0 };
+      rows_.forEach(function (e) {
+        var s = e.summary;
+        tot.tds += s.tds; tot.containers += s.containers; tot.ft20 += s.ft20;
+        tot.ft40 += s.ft40; tot.packages += s.packages; tot.grossWeight += s.grossWeight;
+        other += s.otherFt;
+      });
+      rows.push([h('td', 'c-file c-total', 'total')].concat(cells(tot)));
+    } else {
+      other = rows_[0].summary.otherFt;
+    }
+
+    var headers = ['File', 'TDs', 'Containers', '20 ft', '40 ft', 'Packages', 'Gross weight (kg)'];
+    var sources = ['uploaded file', 'count of <td_bill_code>', 'count of <container_num>',
+      'ISO type starts with 2', 'ISO type starts with 4', 'sum of <decl_qty>', 'sum of <decl_gross_wgt>'];
+    var w = h('div', 'verr-wrap vsum-wrap');
+    var t = table(headers, rows, 'verr vsum-table');
+    var ths = t.querySelectorAll('thead th');
+    for (var i = 1; i < ths.length; i++) ths[i].title = sources[i];
+    w.appendChild(t);
+    box.appendChild(w);
+
+    if (other) {
+      box.appendChild(h('p', 'vnote', fmt(other) + ' container(s) have an ISO type that is neither 2xxx nor 4xxx.'));
+    }
+
+    listEl.appendChild(box);
+  }
+
   function renderActions(d, e) {
     var bar = h('div', 'vact');
     if (e.changes.length) {
@@ -337,6 +396,7 @@
       ' · ' + fmt(fixes) + ' line(s) fixed by replacements.txt' +
       ' · ' + fmt(hits) + ' keyword match(es)';
     list.textContent = '';
+    renderSummary(list);
 
     results.forEach(function (e) {
       var valid = isValid(e);
