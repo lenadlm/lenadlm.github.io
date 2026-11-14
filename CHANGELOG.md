@@ -2,6 +2,9 @@
 
 ## 2026-11-14
 
+### Changed
+- Part shipments: the criterion is now explicit — a container is reported when **2 or more** TDs declare it (`MIN_SHARED_TDS`), any number of TDs, not just pairs. Header reads `N container(s) shared by 2 or more TDs · M TD rows` and each group is labelled with its own `N TDs` count. TDs with no `<container_num>` fall back to their cargo lines' `<container_ref>`, so a shared box is still caught in exports that omit the `<ct>` block. Verified with 3-TD, 2-TD and ref-only fixtures.
+
 ### Fixed
 - `validator-ui.js`: part-shipment rows for the second and later TD of a shared container no longer emit a placeholder cell. With the container cell row-spanned, that empty `<td>` pushed the TD bill code under the `Line` header and the line number into an unlabelled fourth column; the second row now starts at `TD bill code` and every value sits under its own header.
 
