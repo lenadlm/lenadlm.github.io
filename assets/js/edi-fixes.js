@@ -14,6 +14,9 @@
     { label: 'SHIP SPARES', src: "ship['\u2019]?s?[\\s-]*spares", re: /ship['\u2019]?s?[\s\u2013-]*spares?/i }
   ];
 
+  // A container counts as a part shipment when this many TDs (or more) declare it.
+  var MIN_SHARED_TDS = 2;
+
   // replacements.txt: one "old,new" literal per line, applied in file order.
   function parseReplacements(text) {
     var out = [], seen = {};
@@ -294,7 +297,7 @@
       return '';
     }
 
-    var byContainer = {}, order = [], seen = {};
+    var byContainer = {}, order = [], seen = {}, hasNum = {};
     for (i = 0; i < all.length; i++) {
       if (lowerName(all[i]) !== 'container_num') continue;
       var num = textOf(all[i]).toUpperCase();
@@ -305,15 +308,35 @@
       if (!byContainer[num]) { byContainer[num] = []; order.push(num); }
       if (seen[num + '|' + rk]) continue;
       seen[num + '|' + rk] = 1;
+      hasNum[rk] = 1;
       byContainer[num].push({
         code: billCodeOf(rec),
         line: (lineMap && (lineMap.get(rec) || lineMap.get(all[i]))) || null
       });
     }
 
+    // Fallback for exports that carry no <container_num> under a TD: use the
+    // <container_ref> of its cargo lines, so a shared box is still detected.
+    records.forEach(function (rec) {
+      var rk = keyOf(rec);
+      if (hasNum[rk]) return;
+      var kids = rec.getElementsByTagName('*');
+      for (var j = 0; j < kids.length; j++) {
+        if (lowerName(kids[j]) !== 'container_ref') continue;
+        var ref = textOf(kids[j]).toUpperCase();
+        if (!ref || seen[ref + '|' + rk]) continue;
+        seen[ref + '|' + rk] = 1;
+        if (!byContainer[ref]) { byContainer[ref] = []; order.push(ref); }
+        byContainer[ref].push({
+          code: billCodeOf(rec),
+          line: (lineMap && (lineMap.get(rec) || lineMap.get(kids[j]))) || null
+        });
+      }
+    });
+
     out.containers = order.length;
     order.forEach(function (num) {
-      if (byContainer[num].length < 2) return;
+      if (byContainer[num].length < MIN_SHARED_TDS) return;
       out.sharedContainers++;
       out.sharedTds += byContainer[num].length;
       out.groups.push({ container: num, tds: byContainer[num] });

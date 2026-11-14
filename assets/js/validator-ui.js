@@ -384,14 +384,15 @@
     head.appendChild(h('span', 'vsec-title', 'part shipments'));
     var meta;
     if (!ps) meta = 'not available';
-    else if (!ps.sharedContainers) meta = 'no container shared by more than one TD';
-    else meta = fmt(ps.sharedContainers) + ' container(s) shared by ' + fmt(ps.sharedTds) + ' TDs';
+    else if (!ps.sharedContainers) meta = 'no container is shared by 2 or more TDs';
+    else meta = fmt(ps.sharedContainers) + ' container(s) shared by 2 or more TDs · ' +
+      fmt(ps.sharedTds) + ' TD row' + (ps.sharedTds === 1 ? '' : 's');
     head.appendChild(h('span', 'vsec-meta', meta));
     box.appendChild(head);
 
     if (!ps || !ps.groups.length) {
       var why = !ps ? 'Part-shipment check could not run on this file.'
-        : 'Every container_num in this file belongs to a single TD - no part shipment was found.';
+        : 'No container_num in this file is declared by 2 or more TDs - no part shipment was found.';
       box.appendChild(h('p', 'vnote', why));
       d.appendChild(box);
       return;
