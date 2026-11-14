@@ -211,10 +211,55 @@
     };
   }
 
+  function num(el) {
+    var v = String((el && el.textContent) || '').replace(/[^0-9.\-]/g, '');
+    var n = parseFloat(v);
+    return isFinite(n) ? n : 0;
+  }
+
+  // Manifest totals for the summary table: TDs, containers (split 20/40 ft by
+  // the ISO type prefix), packages (sum of decl_qty) and gross weight.
+  function summary(doc) {
+    var s = {
+      tds: 0, containers: 0, ft20: 0, ft40: 0, otherFt: 0,
+      packages: 0, grossWeight: 0, grossLines: 0, packageLines: 0,
+      isoTypes: {}
+    };
+    if (!doc) return s;
+
+    var all = doc.getElementsByTagName('*');
+    var billCodes = 0;
+    for (var i = 0; i < all.length; i++) {
+      var ln = lowerName(all[i]);
+      if (ln === 'td') s.tds++;
+      if (/bill_code$/.test(ln)) billCodes++;
+      else if (ln === 'container_num') {
+        if (textOf(all[i])) s.containers++;
+      } else if (ln === 'iso_container_type') {
+        var iso = textOf(all[i]).toUpperCase();
+        if (iso) s.isoTypes[iso] = (s.isoTypes[iso] || 0) + 1;
+        if (iso.charAt(0) === '2') s.ft20++;
+        else if (iso.charAt(0) === '4') s.ft40++;
+        else if (iso) s.otherFt++;
+      } else if (ln === 'decl_qty') {
+        s.packages += num(all[i]);
+        s.packageLines++;
+      } else if (ln === 'decl_gross_wgt') {
+        s.grossWeight += num(all[i]);
+        s.grossLines++;
+      }
+    }
+    // some exports have no <td> wrapper: fall back to the bill code elements
+    if (!s.tds) s.tds = billCodes;
+    s.otherFt = Math.max(0, s.containers - s.ft20 - s.ft40);
+    return s;
+  }
+
   return {
     DEFAULT_KEYWORDS: DEFAULT_KEYWORDS,
     parseReplacements: parseReplacements,
     applyReplacements: applyReplacements,
-    keywordReport: keywordReport
+    keywordReport: keywordReport,
+    summary: summary
   };
 });
