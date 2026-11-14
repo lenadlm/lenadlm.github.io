@@ -126,6 +126,9 @@
       : null;
     entry.res = KraValidator.validate(parsed.doc, schema, { text: text });
     entry.summary = typeof EdiFixes.summary === 'function' ? EdiFixes.summary(parsed.doc) : null;
+    entry.parts = typeof EdiFixes.partShipments === 'function'
+      ? EdiFixes.partShipments(parsed.doc, lineMap)
+      : null;
     var kw = EdiFixes.keywordReport(parsed.doc, keywords, lineMap);
     entry.keywordHits = kw.hits;
     entry.keywordStats = { scanned: kw.scanned, withDescription: kw.withDescription, descriptions: kw.descriptions, mode: kw.mode, sample: kw.sample };
@@ -373,6 +376,50 @@
     listEl.appendChild(box);
   }
 
+  // ---- section: part shipments (after replacements) ----
+  function renderParts(d, e) {
+    var ps = e.parts;
+    var box = h('div', 'vparts');
+    var head = h('div', 'vsec-head');
+    head.appendChild(h('span', 'vsec-title', 'part shipments'));
+    var meta;
+    if (!ps) meta = 'not available';
+    else if (!ps.sharedContainers) meta = 'no container shared by more than one TD';
+    else meta = fmt(ps.sharedContainers) + ' container(s) shared by ' + fmt(ps.sharedTds) + ' TDs';
+    head.appendChild(h('span', 'vsec-meta', meta));
+    box.appendChild(head);
+
+    if (!ps || !ps.groups.length) {
+      var why = !ps ? 'Part-shipment check could not run on this file.'
+        : 'Every container_num in this file belongs to a single TD - no part shipment was found.';
+      box.appendChild(h('p', 'vnote', why));
+      d.appendChild(box);
+      return;
+    }
+
+    var rows = [];
+    ps.groups.forEach(function (g) {
+      g.tds.forEach(function (td, idx) {
+        var cell = h('td', 'c-ctn');
+        if (idx === 0) {
+          cell.appendChild(h('span', 'c-ctn-num', g.container));
+          cell.appendChild(h('span', 'c-bill', fmt(g.tds.length) + ' TDs'));
+          cell.rowSpan = g.tds.length;
+        }
+        rows.push([
+          cell,
+          h('td', 'c-bill-code', td.code || '–'),
+          td.line ? String(td.line) : '–'
+        ]);
+      });
+    });
+
+    box.appendChild(h('div', 'verr-wrap vparts-wrap')).appendChild(
+      table(['Container', 'TD bill code', 'Line'], rows, 'verr vparts-table')
+    );
+    d.appendChild(box);
+  }
+
   function renderActions(d, e) {
     var bar = h('div', 'vact');
     if (e.changes.length) {
@@ -413,6 +460,9 @@
         : fmt(e.res.stats.td) + ' TDs · ' + (valid ? 'no schema errors' : fmt(e.res.total) + ' schema error' + (e.res.total === 1 ? '' : 's'));
       if (e.changes.length) meta += ' · ' + fmt(e.changes.length) + ' line(s) fixed';
       if (!e.parseError) meta += ' · ' + fmt((e.keywordHits || []).length) + ' keyword match' + ((e.keywordHits || []).length === 1 ? '' : 'es');
+      if (!e.parseError && e.parts && e.parts.sharedContainers) {
+        meta += ' · ' + fmt(e.parts.sharedContainers) + ' shared container' + (e.parts.sharedContainers === 1 ? '' : 's');
+      }
       s.appendChild(h('span', 'vmeta', meta));
       d.appendChild(s);
 
@@ -443,6 +493,7 @@
       }
 
       renderFixes(d, e);
+      renderParts(d, e);
       renderKeywords(d, e);
       renderActions(d, e);
       list.appendChild(d);

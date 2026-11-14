@@ -3,6 +3,8 @@
 ## 2026-11-14
 
 ### Added
+- `validator.html`: **part shipments** section, rendered after the replacements table. Groups every `<container_num>` that appears under more than one TD and lists `Container | TD bill code | Line`, with the container cell spanning its rows and labelled `N TDs`. Empty state explains that every container belongs to a single TD.
+- `assets/js/edi-fixes.js`: `EdiFixes.partShipments(doc, lineMap)` — resolves each container to its nearest TD record, so the check works wherever the container element sits in the file.
 - `validator.html`: manifest totals table at the top of the report — one row per uploaded file with TDs (`<td_bill_code>`), containers (`<container_num>`), 20 ft (ISO type `2xxx`), 40 ft (ISO type `4xxx`), packages (sum of `<decl_qty>`) and gross weight (sum of `<decl_gross_wgt>`), plus a `total` row when more than one file is loaded. A note appears if any container's ISO type is neither `2xxx` nor `4xxx`.
 - `assets/js/edi-fixes.js`: `EdiFixes.summary(doc)` — DOM-only totals used by the page, so the counts never come from regenerated text.
 

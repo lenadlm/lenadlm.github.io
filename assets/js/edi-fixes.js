@@ -255,11 +255,79 @@
     return s;
   }
 
+  // Part shipments: containers whose container_num is used by more than one TD.
+  // Each TD/container pair is reported once, whatever element name the export
+  // uses for the container (<ct> today, but we only look at container_num).
+  function partShipments(doc, lineMap) {
+    var out = { groups: [], containers: 0, sharedContainers: 0, sharedTds: 0 };
+    if (!doc) return out;
+
+    var all = doc.getElementsByTagName('*');
+    var records = [], i;
+    for (i = 0; i < all.length; i++) if (lowerName(all[i]) === 'td') records.push(all[i]);
+    if (!records.length) {
+      for (i = 0; i < all.length; i++) {
+        if (all[i].nodeType === 1 && hasBillCodeChild(all[i])) records.push(all[i]);
+      }
+    }
+    if (!records.length) return out;
+
+    function keyOf(node) {
+      if (!node.__kvKey) node.__kvKey = 'k' + (keyOf.n = (keyOf.n || 0) + 1);
+      return node.__kvKey;
+    }
+    var recordSet = {};
+    records.forEach(function (r) { recordSet[keyOf(r)] = r; });
+
+    function nearestRecord(el) {
+      var n = el.parentNode;
+      while (n && n.nodeType === 1) {
+        if (recordSet[keyOf(n)]) return n;
+        n = n.parentNode;
+      }
+      return null;
+    }
+    function billCodeOf(rec) {
+      for (var c = rec.firstChild; c; c = c.nextSibling) {
+        if (c.nodeType === 1 && /bill_code$/.test(lowerName(c))) return textOf(c);
+      }
+      return '';
+    }
+
+    var byContainer = {}, order = [], seen = {};
+    for (i = 0; i < all.length; i++) {
+      if (lowerName(all[i]) !== 'container_num') continue;
+      var num = textOf(all[i]).toUpperCase();
+      if (!num) continue;
+      var rec = nearestRecord(all[i]);
+      if (!rec) continue;
+      var rk = keyOf(rec);
+      if (!byContainer[num]) { byContainer[num] = []; order.push(num); }
+      if (seen[num + '|' + rk]) continue;
+      seen[num + '|' + rk] = 1;
+      byContainer[num].push({
+        code: billCodeOf(rec),
+        line: (lineMap && (lineMap.get(rec) || lineMap.get(all[i]))) || null
+      });
+    }
+
+    out.containers = order.length;
+    order.forEach(function (num) {
+      if (byContainer[num].length < 2) return;
+      out.sharedContainers++;
+      out.sharedTds += byContainer[num].length;
+      out.groups.push({ container: num, tds: byContainer[num] });
+    });
+    out.groups.sort(function (a, b) { return b.tds.length - a.tds.length || a.container.localeCompare(b.container); });
+    return out;
+  }
+
   return {
     DEFAULT_KEYWORDS: DEFAULT_KEYWORDS,
     parseReplacements: parseReplacements,
     applyReplacements: applyReplacements,
     keywordReport: keywordReport,
+    partShipments: partShipments,
     summary: summary
   };
 });
