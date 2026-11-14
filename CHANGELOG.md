@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-14
+
+### Fixed
+- `assets/js/validator-ui.js`: every file's report is now expanded on render. A file with no schema errors and no replacement matches collapsed to a one-line summary, so the key-word review — the whole point of a clean file — was hidden until the row was clicked. The file header meta now also states the keyword match count (`162 TDs · no schema errors · 21 keyword matches`).
+- Bumped the asset/build marker to `20261114a` so browsers reload the fixed bundle.
+
 ## 2026-11-13 (3)
 
 ### Removed

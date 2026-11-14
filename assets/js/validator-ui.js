@@ -341,7 +341,10 @@
     results.forEach(function (e) {
       var valid = isValid(e);
       var d = h('details', 'vfile ' + (valid ? 'is-ok' : 'is-bad'));
-      if (!valid || e.changes.length) d.open = true;
+      // Always open: the key-word review is a result in its own right, so a
+      // clean file (no schema errors, no replacements) must not hide it behind
+      // a click. Every file's sections are visible without interaction.
+      d.open = true;
 
       var s = h('summary');
       s.appendChild(h('span', 'vbadge', valid ? 'VALID' : 'INVALID'));
@@ -349,6 +352,7 @@
       var meta = e.parseError ? 'not well-formed'
         : fmt(e.res.stats.td) + ' TDs · ' + (valid ? 'no schema errors' : fmt(e.res.total) + ' schema error' + (e.res.total === 1 ? '' : 's'));
       if (e.changes.length) meta += ' · ' + fmt(e.changes.length) + ' line(s) fixed';
+      if (!e.parseError) meta += ' · ' + fmt((e.keywordHits || []).length) + ' keyword match' + ((e.keywordHits || []).length === 1 ? '' : 'es');
       s.appendChild(h('span', 'vmeta', meta));
       d.appendChild(s);
 
