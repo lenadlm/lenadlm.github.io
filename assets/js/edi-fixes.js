@@ -90,6 +90,26 @@
     };
   }
 
+  // Per-call element keying. A shared expando (or one counter reused by another
+  // scanner) lets two different nodes collide on the same key, and the TD lookup
+  // then misses the record -> hits render with a blank bill code.
+  var KEY_SEQ = 0;
+  function makeKeyOf() {
+    if (typeof WeakMap === 'function') {
+      var map = new WeakMap(), m = 0;
+      return function (node) {
+        var k = map.get(node);
+        if (!k) { k = ++m; map.set(node, k); }
+        return k;
+      };
+    }
+    var prop = '__kvKey' + (++KEY_SEQ), n = 0;
+    return function (node) {
+      if (!node[prop]) node[prop] = ++n;
+      return node[prop];
+    };
+  }
+
   function localName(node) { return node.localName || String(node.nodeName).split(':').pop(); }
   function lowerName(node) { return String(localName(node) || '').toLowerCase(); }
 
@@ -149,13 +169,9 @@
       }
     }
 
+    var keyOf = makeKeyOf();
     var recordSet = {};
     records.forEach(function (r) { recordSet[keyOf(r)] = r; });
-
-    function keyOf(node) {
-      if (!node.__kvKey) node.__kvKey = 'k' + (keyOf.n = (keyOf.n || 0) + 1);
-      return node.__kvKey;
-    }
 
     function nearestRecord(el) {
       var n = el.parentNode;
@@ -172,6 +188,11 @@
       while (kid) {
         if (kid.nodeType === 1 && /bill_code$/.test(lowerName(kid))) return textOf(kid);
         kid = kid.nextSibling;
+      }
+      // some exports nest the bill code deeper (e.g. inside a header block)
+      var kids = rec.getElementsByTagName('*');
+      for (var q = 0; q < kids.length; q++) {
+        if (/bill_code$/.test(lowerName(kids[q]))) return textOf(kids[q]);
       }
       return '';
     }
@@ -275,10 +296,7 @@
     }
     if (!records.length) return out;
 
-    function keyOf(node) {
-      if (!node.__kvKey) node.__kvKey = 'k' + (keyOf.n = (keyOf.n || 0) + 1);
-      return node.__kvKey;
-    }
+    var keyOf = makeKeyOf();
     var recordSet = {};
     records.forEach(function (r) { recordSet[keyOf(r)] = r; });
 

@@ -2,6 +2,9 @@
 
 ## 2026-11-14
 
+### Fixed
+- Key words: rows could lose their TD bill code (`–`) because `keywordReport` and `partShipments` both stamped a `__kvKey` expando with independent counters. Running part shipments first left stale keys on the same nodes, two nodes collided on one key, the TD lookup missed, and the hit rendered without a code. Each scanner now keys its nodes with its own `WeakMap` (`makeKeyOf`), so a hit always resolves to its TD. On the supplied 134-TD manifest all 25 hits now show a bill code (10 were blank before); `billCodeOf` also falls back to a nested `*bill_code` descendant.
+
 ### Changed
 - Part shipments: the criterion is now explicit — a container is reported when **2 or more** TDs declare it (`MIN_SHARED_TDS`), any number of TDs, not just pairs. Header reads `N container(s) shared by 2 or more TDs · M TD rows` and each group is labelled with its own `N TDs` count. TDs with no `<container_num>` fall back to their cargo lines' `<container_ref>`, so a shared box is still caught in exports that omit the `<ct>` block. Verified with 3-TD, 2-TD and ref-only fixtures.
 
