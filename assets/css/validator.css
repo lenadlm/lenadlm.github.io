@@ -314,3 +314,9 @@ main section:last-of-type{ padding-bottom: 60px; }
 @media (max-width: 640px){
   .vparts{ padding: 0 16px 16px; }
 }
+
+/* part shipments: keep the three columns locked so row-spanned groups align */
+.verr.vparts-table td.c-line{ font-family: var(--mono); color: var(--ink-faint); white-space: nowrap; }
+.verr.vparts-table td.c-ctn,
+.verr.vparts-table td.c-bill-code,
+.verr.vparts-table td.c-line{ vertical-align: top; }

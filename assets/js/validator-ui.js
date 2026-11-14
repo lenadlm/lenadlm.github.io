@@ -400,17 +400,21 @@
     var rows = [];
     ps.groups.forEach(function (g) {
       g.tds.forEach(function (td, idx) {
-        var cell = h('td', 'c-ctn');
+        var cells;
         if (idx === 0) {
+          // the rowspan already covers column 1 for the following rows, so they
+          // must NOT emit a placeholder cell or everything shifts right
+          var cell = h('td', 'c-ctn');
           cell.appendChild(h('span', 'c-ctn-num', g.container));
-          cell.appendChild(h('span', 'c-bill', fmt(g.tds.length) + ' TDs'));
+          cell.appendChild(h('span', 'c-bill', fmt(g.tds.length) + ' TD' + (g.tds.length === 1 ? '' : 's')));
           cell.rowSpan = g.tds.length;
+          cells = [cell];
+        } else {
+          cells = [];
         }
-        rows.push([
-          cell,
-          h('td', 'c-bill-code', td.code || '–'),
-          td.line ? String(td.line) : '–'
-        ]);
+        cells.push(h('td', 'c-bill-code', td.code || '–'));
+        cells.push(h('td', 'c-line', td.line ? String(td.line) : '–'));
+        rows.push(cells);
       });
     });
 

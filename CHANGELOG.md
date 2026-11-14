@@ -2,6 +2,9 @@
 
 ## 2026-11-14
 
+### Fixed
+- `validator-ui.js`: part-shipment rows for the second and later TD of a shared container no longer emit a placeholder cell. With the container cell row-spanned, that empty `<td>` pushed the TD bill code under the `Line` header and the line number into an unlabelled fourth column; the second row now starts at `TD bill code` and every value sits under its own header.
+
 ### Added
 - `validator.html`: **part shipments** section, rendered after the replacements table. Groups every `<container_num>` that appears under more than one TD and lists `Container | TD bill code | Line`, with the container cell spanning its rows and labelled `N TDs`. Empty state explains that every container belongs to a single TD.
 - `assets/js/edi-fixes.js`: `EdiFixes.partShipments(doc, lineMap)` — resolves each container to its nearest TD record, so the check works wherever the container element sits in the file.
