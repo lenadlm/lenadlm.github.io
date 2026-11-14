@@ -290,3 +290,27 @@ main section:last-of-type{ padding-bottom: 60px; }
 @media (max-width: 640px){
   .vsum{ padding: 4px 16px 16px; }
 }
+
+/* ---------------- part shipments ---------------- */
+.vparts{ padding: 0 24px 18px; }
+.vparts .vsec-head{ border-top: 0; }
+.vparts-wrap{ padding: 0; }
+.verr.vparts-table{ width: auto; min-width: 380px; }
+.verr.vparts-table td.c-ctn{ vertical-align: top; white-space: nowrap; }
+.verr.vparts-table .c-ctn-num{
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  color: var(--accent);
+}
+.verr.vparts-table .c-ctn .c-bill{ color: var(--ink-faint); font-size: 0.7rem; letter-spacing: 0.04em; }
+.verr.vparts-table td.c-bill-code{
+  font-family: var(--mono);
+  color: var(--accent-2);
+  white-space: nowrap;
+}
+.verr.vparts-table tbody tr:last-child td{ border-bottom: 0; }
+.verr.vparts-table tbody tr td{ border-bottom-color: rgba(234,240,236,0.06); }
+@media (max-width: 640px){
+  .vparts{ padding: 0 16px 16px; }
+}

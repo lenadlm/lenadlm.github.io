@@ -9,6 +9,7 @@
 - [ ] Keep descriptions to one line; add a tool only if it is actually used
 
 ## Validator
+- [x] Part shipments: containers shared by more than one TD, listed after the replacements table
 - [x] Manifest totals table at the top: TDs, containers, 20 ft / 40 ft split, packages, gross weight
 - [x] Optional "apply replacements" step (port of MAN.PS1) before validating, with a diff view
 - [x] Download a corrected copy of a file after replacements
