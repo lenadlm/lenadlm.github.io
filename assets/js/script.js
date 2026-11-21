@@ -1,88 +1,52 @@
-// Select the element where time will be displayed
-const timeElement = document.querySelector('.time');
+/* ==========================================================================
+   lenadlm.github.io — script.js
+   Plain vanilla JS: live clock in the nav + scroll-triggered reveal for
+   panels. No jQuery / Bootstrap JS bundle required.
+   ========================================================================== */
 
-// Function to update the time display with short format (hour and minute)
-function updateTime() {
-  try {
-    const now = new Date();
-    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-    const shortTime = now.toLocaleTimeString('en-US', options);
-    timeElement.innerHTML = shortTime;
-  } catch (error) {
-    console.error('Error updating time:', error);
+(function () {
+  'use strict';
+
+  // ---- Nav clock ----
+  function tick() {
+    var el = document.getElementById('clock');
+    if (!el) return;
+    var d = new Date();
+    var h = d.getHours();
+    var m = d.getMinutes();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    if (h === 0) h = 12;
+    var mm = m < 10 ? '0' + m : m;
+    el.textContent = h + ':' + mm + ' ' + ampm;
   }
-}
+  tick();
+  setInterval(tick, 1000 * 30);
 
-// Function to show detailed time format on mouse enter
-function showLongTime() {
-  try {
-    const now = new Date();
-    const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
-    const longTime = now.toLocaleDateString('en-US', options);
-    timeElement.classList.add('time-long');
-    timeElement.textContent = longTime;
-  } catch (error) {
-    console.error('Error showing long time:', error);
-  }
-}
+  // ---- Scroll reveal for .panel elements marked with .reveal ----
+  function initReveal() {
+    var targets = document.querySelectorAll('.reveal');
+    if (!targets.length) return;
 
-// Function to revert to short time format on mouse leave
-function hideLongTime() {
-  try {
-    const now = new Date();
-    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-    const shortTime = now.toLocaleTimeString('en-US', options);
-    timeElement.classList.remove('time-long');
-    timeElement.innerHTML = shortTime;
-  } catch (error) {
-    console.error('Error hiding long time:', error);
-  }
-}
-
-// Update the time initially and then every 5 seconds
-updateTime(); // Call once to initialize
-setInterval(updateTime, 5000); // Update every 5 seconds
-
-// Event listeners to show/hide detailed time format on hover
-timeElement.addEventListener('mouseenter', showLongTime);
-timeElement.addEventListener('mouseleave', hideLongTime);
-
-
-// Select all badge images 
-const badgeImages = document.querySelectorAll('.badge img');
-
-// Function to add wiggle animation
-function addWiggleAnimation() {
-    this.classList.add('badge-wiggle');
-}
-
-// Function to remove wiggle animation
-function removeWiggleAnimation() {
-    this.classList.remove('badge-wiggle');
-}
-
-// Add event listeners to each badge image
-badgeImages.forEach(badge => {
-    badge.addEventListener('mouseenter', addWiggleAnimation);
-    badge.addEventListener('mouseleave', removeWiggleAnimation);
-});
-
- // Intersection Observer for slide-in effect
-document.addEventListener('DOMContentLoaded', function () {
-    const observerOptions = {
-        threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('slide-in-right-visible');
-                observer.unobserve(entry.target);
-            }
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
         });
-    }, observerOptions);
-    
-    document.querySelectorAll('.slide-in-right').forEach(element => {
-        observer.observe(element);
-    });
-});
+      }, { threshold: 0.15 });
+
+      targets.forEach(function (el) { observer.observe(el); });
+    } else {
+      targets.forEach(function (el) { el.classList.add('is-visible'); });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReveal);
+  } else {
+    initReveal();
+  }
+})();
